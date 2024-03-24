@@ -1,0 +1,9 @@
+Major: 21
+Grade: 23
+Student: 87200630
+Score: wjf 90.000000 2301 0 0
+Score: xxds 95.000000 2302 0 0
+Major: 87
+Grade: 22
+Student: 87200631
+Score: sp 85.000000 2301 0 0

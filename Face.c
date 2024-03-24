@@ -11,12 +11,12 @@
 #include "Free_List.h"
 //文件命名
 #define FILENAME_SUB "subjects.txt"
-#define FILENAME_GRA "students.txt"
+#define FILENAME_GRA "LIST_StdGrade.txt"
 void Menu_SubInfor();
 void Menu_StdGrade();
 void First_Load();
 struct Student* head_StdGrade = NULL;
-struct SubInfor* head_SubInfor = NULL;
+struct Major* head_Major = NULL;
 int main()
 {
     First_Load();
@@ -55,128 +55,164 @@ int main()
     }
 }
 
-//学生成绩菜单
 
-void Menu_StdGrade(){
-        int choice;
-        int studentID;
-        char courseName[20];
-        float score;
-        char semester[20];
-        int isExempted;
-        int isFailed;
-        system("cls");
-        system("color F0");
-        HideCursor();
-        cursor(26, 6);
-        printf("已进入学生成绩管理菜单！\n\n");
-        do {
-            printf("1. 添加学生\n");
-            printf("2. 录入学生成绩\n");
-            printf("3. 修改学生成绩\n");
-            printf("4. 删除学生成绩\n");
-            printf("5. 查询单个学生的所有成绩\n");
-            //printf("6. 从文件导入\n");
-            printf("6. 保存到文件\n");
-            printf("0. 退出\n");
-            printf("请输入您的选择：");
-            scanf("%d", &choice);
-
-            switch (choice) {
-            case 1:
-                printf("请输入学生学号：");
-                scanf("%d", &studentID);
-                addStudent(&head_StdGrade, studentID);
-                break;
-            case 2:
-                printf("请输入学生学号：");
-                scanf("%d", &studentID);
-                struct Student* current = head_StdGrade;
-                while (current != NULL) {
-                    if (current->studentID == studentID)
-                        break;
-                    current = current->next;
-                }
-                if (current == NULL) {
-                    printf("没有该名学生！\n");
-                    break;
-                }
-                while (1) {
-                    printf("请输入科目编号（两位字母加八位数字）：");
-                    scanf("%s", courseName);
-
-                    if (isValid_SubNum(courseName)) {
-                        break;
-                    }
-                    else {
-                        printf("课程编号格式不正确，请重新输入。\n");
-                    }
-                }
-                printf("请输入成绩：");
-                scanf("%f", &score);
-                printf("请输入修读学期（四位有效数字，前两位年份，后两位01为第一学期，02为第二学期：");
-                while (1) {
-                    printf("请输入科目编号（两位字母加八位数字）：");
-                    scanf("%s", semester);
-
-                    if (isValid_SemesterNum(semester)) {
-                        break;
-                    }
-                    else {
-                        printf("修读学期格式不正确，请重新输入。\n");
-                    }
-                }
-                printf("是否免修（1表示是，0表示否）：");
-                scanf("%d", &isExempted);
-                printf("是否挂科（1表示是，0表示否）：");
-                scanf("%d", &isFailed);
-                addScore(&head_StdGrade, studentID, courseName, score, semester, isExempted, isFailed);
-                break;
-            case 3:
-                printf("请输入学生学号：");
-                scanf("%d", &studentID);
-                printf("请输入课程名：");
-                scanf("%s", courseName);
-                printf("请输入新的成绩：");
-                scanf("%f", &score);
-                updateScore(&head_StdGrade, studentID, courseName, score);
-                break;
-            case 4:
-                printf("请输入学生学号：");
-                scanf("%d", &studentID);
-                printf("请输入要删除的课程名：");
-                scanf("%s", courseName);
-                deleteScore(&head_StdGrade, studentID, courseName);
-                break;
-            case 5:
-                printf("请输入学生学号：");
-                scanf("%d", &studentID);
-                queryScores(&head_StdGrade, studentID);
-                break;
-            /*case 6:
-                loadFromGrade("FILENAME_GRA");// 进行操作，例如添加学生、录入成绩等
-                break;
-            */
-            case 6:
-                // 保存学生信息到文件
-                saveToGrade(&head_StdGrade, "FILENAME_GRA");
-                break;
-            case 0:
-                printf("感谢使用成绩管理系统！\n");
-                break;
-            default:
-                printf("无效的选择！\n");
-                break;
-            }
-            printf("\n");
-        } while (choice != 0);
-        return;
-}
 //首次文件载入
 void First_Load() {
     loadFrom_SubInfor(&head_SubInfor, FILENAME_SUB);
-    loadFromGrade(&head_StdGrade, FILENAME_GRA);
+    //调用加载函数并判断是否加载成功
+    loadFrom_StdGrade(&head_Major, FILENAME_GRA);
+    //loadFromGrade(&head_StdGrade, FILENAME_GRA);
 }
+//学生成绩菜单
+void Menu_StdGrade()
+{
+    
+    int choice;
+    char majorNum[10];
+    int gradeNum;
+    int studentID;
+    char courseName[20];
+    float score;
+    char semester[5];
+    int isExempted;
+    int isFailed;
+    float newScore;
+    system("cls");
+    system("color F0");
+    HideCursor();
+    cursor(26, 6);
+    printf("已进入成绩管理菜单！\n\n");
+
+    while (1) {
+        printf("1. 添加专业\n");
+        printf("2. 添加年级\n");
+        printf("3. 添加学生\n");
+        printf("4. 添加学生成绩\n");
+        printf("5. 修改学生成绩\n");
+        printf("6. 删除学生成绩\n");
+        printf("7. 删除学生\n");
+        printf("8. 保存数据到文件\n");
+        printf("9. 显示单个学生的所有成绩\n");
+        printf("10. 退出系统\n");
+        printf("请输入您的选择：");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            printf("请输入专业编号：");
+            scanf("%s", majorNum);
+            add_Major(&head_Major, majorNum);
+            break;
+        case 2:
+            printf("请输入专业编号：");
+            scanf("%s", majorNum);
+            printf("请输入年级：");
+            scanf("%d", &gradeNum);
+            add_Grade(search_Major(&head_Major, majorNum), gradeNum);
+            break;
+        case 3:
+            printf("请输入专业编号：");
+            scanf("%s", majorNum);
+            printf("请输入年级：");
+            scanf("%d", &gradeNum);
+            printf("请输入学号：");
+            scanf("%d", &studentID);
+            add_Student(&head_Major, studentID, majorNum, gradeNum);
+            break;
+        case 4:
+            printf("请输入学号：");
+            scanf("%d", &studentID);
+            printf("请输入课程名：");
+            scanf("%s", courseName);
+            printf("请输入成绩：");
+            scanf("%f", &score);
+            printf("请输入修读学期：");
+            scanf("%s", semester);
+            printf("请输入是否免修（0表示否，1表示是）：");
+            scanf("%d", &isExempted);
+            printf("请输入是否挂科（0表示否，1表示是）：");
+            scanf("%d", &isFailed);
+            if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == 1) {
+                printf("添加成功。\n");
+            }
+            else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -1) {
+                printf("学生不存在，添加失败。\n");
+            }
+            else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -2) {
+                printf("课程名重复，添加失败。\n");
+            }
+            else {
+                printf("添加失败。\n");
+            }
+            break;
+        case 5:
+            printf("请输入学号：");
+            scanf("%d", &studentID);
+            printf("请输入课程名：");
+            scanf("%s", courseName);
+            printf("请输入新的成绩：");
+            scanf("%f", &newScore);
+            if (update_Score(&head_Major, studentID, courseName, newScore) == 1) {
+                printf("修改成功。\n");
+            }
+            else if (update_Score(&head_Major, studentID, courseName, newScore) == -1) {
+                printf("学生不存在，修改失败。\n");
+            }
+            else if (update_Score(&head_Major, studentID, courseName, newScore) == -2) {
+                printf("课程名不存在，修改失败。\n");
+            }
+            else {
+                printf("修改失败。\n");
+            }
+            break;
+        case 6:
+            printf("请输入学号：");
+            scanf("%d", &studentID);
+            printf("请输入课程名：");
+            scanf("%s", courseName);
+            if (delete_Score(&head_Major, studentID, courseName) == 1) {
+                printf("删除成功。\n");
+            }
+            else if (delete_Score(&head_Major, studentID, courseName) == -1) {
+                printf("学生不存在，删除失败。\n");
+            }
+            else if (delete_Score(&head_Major, studentID, courseName) == -2) {
+                printf("课程名不存在，删除失败。\n");
+            }
+            else {
+                printf("删除失败。\n");
+            }
+            break;
+        case 7:
+            printf("请输入学号：");
+            scanf("%d", &studentID);
+            if (delete_Student(&head_Major, studentID) == 1) {
+                printf("删除成功。\n");
+            }
+            else {
+                printf("删除失败。\n");
+            }
+            break;
+        case 8:
+            //调用保存函数并判断是否保存成功
+            saveTo_StdGrade(&head_Major, "LIST_StdGrade.txt");
+            break;
+        case 9:
+            printf("请输入学号");
+            scanf("%d", &studentID);
+            query_Scores(&head_Major, studentID);
+            break;
+        case 10:
+            printf("感谢使用，再见！\n");
+            exit(0);
+        default:
+            printf("无效的选择，请重新输入。\n");
+            break;
+        }
+    }
+}
+
+
 //科目列表菜单
 void Menu_SubInfor() {
     system("cls");

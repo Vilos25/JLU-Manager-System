@@ -1,70 +1,73 @@
-#define _CRT_SECURE_NO_WARNINGS 1#include <stdio.h>
+#define _CRT_SECURE_NO_WARNINGS 1
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "Func_isValid.h"
 #include "LIST_StdGrade.h"
-
-//专业节点结构体
-struct Major {
-    char majorNum[10];  // 专业编号
-    struct Major* next;  // 下一个专业节点的指针
-	struct Grade* grade;//年级链表的头指针
-};
-//年级节点结构体
-struct Grade {
-    int gradeNum;  // 年级
-    struct Grade* next;  // 下一个年级节点的指针
-	struct Student* student;  // 学生链表的头指针
-};
-// 学生节点结构体
-struct Student {
-    int studentID;  // 学号
-    int GPA;  // 平均学分绩点
-	int rank;	// 排名
-	char rankTime[20];	// 排名时间
-    struct SubScore* scores;  // 成绩链表的头指针
-    struct Student* next;  // 下一个学生节点的指针
-};
-// 学生成绩节点结构体
-struct SubScore {
-    char courseName[20];  // 课程名
-    float score;  // 课程成绩
-    char semester[5];  // 修读学期
-    int isExempted;  // 是否免修
-    int isFailed;  // 是否挂科
-    struct SubScore* next;  // 下一个学生成绩节点的指针
-};
-//创建专业头节点
+//创建专业头节点并初始化
 struct Major* create_Major() {
 	struct Major* newNode = (struct Major*)malloc(sizeof(struct Major));
 	if (newNode != NULL) {
-        strcpy(newNode->majorNum, "0");
+		strcpy(newNode->majorNum, "0");
 		newNode->next = NULL;
+		struct Grade* newGrade = (struct Grade*)malloc(sizeof(struct Grade));
+		if (newGrade != NULL) {
+			newGrade->gradeNum = 0;
+			newGrade->next = NULL;
+			newGrade->student = NULL;
+			newNode->grade = newGrade;
+			struct Student* newStudent = (struct Student*)malloc(sizeof(struct Student));
+			if (newStudent != NULL) {
+				newStudent->studentID = 0;
+				newStudent->GPA = 0;
+				newStudent->rank = 0;
+				strcpy(newStudent->rankTime, "0");
+				newStudent->scores = NULL;
+				newStudent->next = NULL;
+				newGrade->student = newStudent;
+				struct SubScore* newScore = (struct SubScore*)malloc(sizeof(struct SubScore));
+				if (newScore != NULL) {
+					strcpy(newScore->courseName, "0");
+					newScore->score = 0;
+					strcpy(newScore->semester, "0");
+					newScore->isExempted = 0;
+					newScore->isFailed = 0;
+					newScore->next = NULL;
+					newStudent->scores = newScore;
+				}
+			}
+
+		}
 	}
 	return newNode;
 }
 
 
-
 //添加专业节点包含通过专业编号查重的功能
 void add_Major(struct Major** head_Major, char majorNum[10]) {
-	struct Major* newNode = create_Major();
 	struct Major* temp = *head_Major;
-	if (newNode != NULL) {
-		while (temp->next != NULL) {
-			if (strcmp(temp->majorNum, majorNum) == 0) {
-				printf("专业编号重复，添加失败。\n");
-				return;
-			}
-			temp = temp->next;
-		}
+	while (temp != NULL) {
 		if (strcmp(temp->majorNum, majorNum) == 0) {
 			printf("专业编号重复，添加失败。\n");
 			return;
 		}
+		temp = temp->next;
+	}
+	
+	struct Major* newNode = create_Major();
+	if (newNode != NULL) {
 		strcpy(newNode->majorNum, majorNum);
-		temp->next = newNode;
+		if(*head_Major == NULL)
+			*head_Major = newNode;
+		else {
+			//在链表尾部添加新节点
+			temp = *head_Major;
+			while (temp->next != NULL) {
+				temp = temp->next;
+			}
+			temp->next = newNode;
+		}
 	}
 }
 //通过专业编号查找专业节点并返回其地址
@@ -78,40 +81,67 @@ struct Major* search_Major(struct Major** head_Major, const char* majorNum) {
 	}
 	return NULL;  // 未找到匹配的节点
 }
-//创建年级头节点并连接到专业节点
-struct Grade* create_Grade(struct Major* major) {
+//创建年级头节点，返回值为新创建的年级节点的地址，返回值为NULL表示创建失败，初始化年级节点的学生节点
+struct Grade* create_Grade() {
 	struct Grade* newNode = (struct Grade*)malloc(sizeof(struct Grade));
 	if (newNode != NULL) {
 		newNode->gradeNum = 0;
 		newNode->next = NULL;
 		newNode->student = NULL;
-		major->grade = newNode;
+		struct Student* newStudent = (struct Student*)malloc(sizeof(struct Student));
+		if (newStudent != NULL) {
+			newStudent->studentID = 0;
+			newStudent->GPA = 0;
+			newStudent->rank = 0;
+			strcpy(newStudent->rankTime, "0");
+			newStudent->scores = NULL;
+			newStudent->next = NULL;
+			newNode->student = newStudent;
+			struct SubScore* newScore = (struct SubScore*)malloc(sizeof(struct SubScore));
+			if (newScore != NULL) {
+				strcpy(newScore->courseName, "0");
+				newScore->score = 0;
+				strcpy(newScore->semester, "0");
+				newScore->isExempted = 0;
+				newScore->isFailed = 0;
+				newScore->next = NULL;
+				newStudent->scores = newScore;
+			}
+		}
 	}
 	return newNode;
 }
-//添加年级节点包含通过年级查重的功能
-void add_Grade(struct Major* major, int gradeNum) {
-	struct Grade* newNode = create_Grade(major);
-	struct Grade* temp = major->grade;
-	if (newNode != NULL) {
-		while (temp->next != NULL) {
-			if (temp->gradeNum == gradeNum) {
-				printf("年级重复，添加失败。\n");
-				return;
-			}
-			temp = temp->next;
-		}
+
+//添加年级节点包含通过年级查重的功能，返回值为1表示添加成功，返回值为0表示添加失败
+void add_Grade(struct Major* Major, int gradeNum) {
+	struct Grade* temp = Major->grade;
+	while (temp != NULL) {
 		if (temp->gradeNum == gradeNum) {
 			printf("年级重复，添加失败。\n");
 			return;
 		}
+		temp = temp->next;
+	}
+	
+	struct Grade* newNode = create_Grade();
+	if (newNode != NULL) {
 		newNode->gradeNum = gradeNum;
+	}
+	if (Major->grade == NULL)
+		Major->grade = newNode;
+	else
+	//在链表尾部添加新节点
+	{
+		temp = Major->grade;
+		while (temp->next != NULL)
+			temp = temp->next;
 		temp->next = newNode;
 	}
 }
+
 //通过年级查找年级节点并返回其地址
-struct Grade* search_Grade(struct Major* major, int gradeNum) {
-	struct Grade* temp = major->grade;
+struct Grade* search_Grade(struct Major** Major, int gradeNum) {
+	struct Grade* temp = (*Major)->grade;
 	while (temp != NULL) {
 		if (temp->gradeNum == gradeNum) {
 			return temp;
@@ -120,8 +150,10 @@ struct Grade* search_Grade(struct Major* major, int gradeNum) {
 	}
 	return NULL;  // 未找到匹配的节点
 }
-//创建学生节点并连接到年级节点
-struct Student* create_Student(struct Grade* grade) {
+
+
+//创建学生节点
+struct Student* create_Student() {
 	struct Student* newNode = (struct Student*)malloc(sizeof(struct Student));
 	if (newNode != NULL) {
 		newNode->studentID = 0;
@@ -130,7 +162,16 @@ struct Student* create_Student(struct Grade* grade) {
 		strcpy(newNode->rankTime, "0");
 		newNode->scores = NULL;
 		newNode->next = NULL;
-		grade->student = newNode;
+		struct SubScore* newScore = (struct SubScore*)malloc(sizeof(struct SubScore));
+		if (newScore != NULL) {
+			strcpy(newScore->courseName, "0");
+			newScore->score = 0;
+			strcpy(newScore->semester, "0");
+			newScore->isExempted = 0;
+			newScore->isFailed = 0;
+			newScore->next = NULL;
+			newNode->scores = newScore;
+		}
 	}
 	return newNode;
 }
@@ -141,30 +182,36 @@ void add_Student(struct Major** head_Major, int studentID, char majorNum[10], in
 		printf("专业不存在，添加失败。\n");
 		return;
 	}
-	struct Grade* tempGrade = search_Grade(tempMajor, gradeNum);
+	struct Grade* tempGrade = search_Grade(&tempMajor, gradeNum);
 	if (tempGrade == NULL) {
 		printf("年级不存在，添加失败。\n");
 		return;
 	}
-	struct Student* newNode = create_Student(tempGrade);
-	struct Student* tempStudent;
-	if (newNode != NULL) {
-		tempStudent = tempGrade->student;
-		while (tempStudent->next != NULL) {
-			if (tempStudent->studentID == studentID) {
-				printf("学号重复，添加失败。\n");
-				return;
-			}
-			tempStudent = tempStudent->next;
-		}
+	struct Student* tempStudent = tempGrade->student;
+	while (tempStudent != NULL) {
 		if (tempStudent->studentID == studentID) {
 			printf("学号重复，添加失败。\n");
 			return;
 		}
+		tempStudent = tempStudent->next;
+	}
+	
+	struct Student* newNode = create_Student();
+	if (newNode != NULL) {
 		newNode->studentID = studentID;
-		tempStudent->next = newNode;
+		if(tempGrade->student == NULL)
+			tempGrade->student = newNode;
+		else {
+			tempStudent = tempGrade->student;
+			while (tempStudent->next != NULL) {
+				tempStudent = tempStudent->next;
+			}
+			tempStudent->next = newNode;
+		}
 	}
 }
+
+
 
 //通过学号在整个链表中查找单个学生节点
 struct Student* search_Student(struct Major** head_Major, int studentID) {
@@ -194,6 +241,13 @@ int add_Score(struct Major** head_Major, int studentID, char courseName[20], flo
 	if (tempStudent == NULL) {
 		return -1;
 	}
+	struct SubScore* temp = tempStudent->scores;
+	while (temp != NULL) {
+		if (strcmp(temp->courseName, courseName) == 0) {
+			return -2;
+		}
+		temp = temp->next;
+	}
 	struct SubScore* newNode = (struct SubScore*)malloc(sizeof(struct SubScore));
 	if (newNode != NULL) {
 		strcpy(newNode->courseName, courseName);
@@ -202,13 +256,7 @@ int add_Score(struct Major** head_Major, int studentID, char courseName[20], flo
 		newNode->isExempted = isExempted;
 		newNode->isFailed = isFailed;
 		newNode->next = NULL;
-		struct SubScore* temp = tempStudent->scores;
-		while (temp != NULL) {
-			if (strcmp(temp->courseName, courseName) == 0) {
-				return -2;
-			}
-			temp = temp->next;
-		}
+		
 		if (tempStudent->scores == NULL) {
 			tempStudent->scores = newNode;
 		}
@@ -317,42 +365,52 @@ int delete_Student(struct Major** head_Major, int studentID) {
 }
 //删除指定年级，返回值为1表示删除成功，返回值为0表示删除失败
 int delete_Grade(struct Major** head_Major, char majorNum[10], int gradeNum) {
-	struct Major* tempMajor = search_Major(head_Major, majorNum);
-	if (tempMajor == NULL) {
-		return 0;
-	}
-	struct Grade* tempGrade = tempMajor->grade;
-	struct Grade* tempGrade2;
-	if (tempGrade != NULL) {
-		if (tempGrade->gradeNum == gradeNum) {
-			tempMajor->grade = tempGrade->next;
-			while (tempGrade->student != NULL) {
-				delete_AllScore(head_Major, tempGrade->student->studentID);
-				tempGrade2 = tempGrade->student;
-				tempGrade->student = tempGrade->student->next;
-				free(tempGrade2);
-			}
-			free(tempGrade);
-			return 1;
-		}
-		while (tempGrade->next != NULL) {
-			if (tempGrade->next->gradeNum == gradeNum) {
-				while (tempGrade->next->student != NULL) {
-					delete_AllScore(head_Major, tempGrade->next->student->studentID);
-					tempGrade2 = tempGrade->next->student;
-					tempGrade->next->student = tempGrade->next->student->next;
-					free(tempGrade2);
+	struct Major* tempMajor = *head_Major;
+	while (tempMajor != NULL) {
+		if (strcmp(tempMajor->majorNum, majorNum) == 0) {
+			struct Grade* currentGrade = NULL;
+			currentGrade = tempMajor->grade;
+			struct Grade* prevGrade = NULL;
+
+			while (currentGrade != NULL) {
+				if (currentGrade->gradeNum == gradeNum) {
+					// 删除年级节点
+					if (prevGrade == NULL) {
+						tempMajor->grade = currentGrade->next;
+					}
+					else {
+						prevGrade->next = currentGrade->next;
+					}
+
+					// 删除年级下的所有学生及其成绩
+					struct Student* currentStudent = currentGrade->student;
+					while (currentStudent != NULL) {
+						struct SubScore* currentScore = currentStudent->scores;
+						while (currentScore != NULL) {
+							struct SubScore* tempScore = currentScore;
+							currentScore = currentScore->next;
+							free(tempScore);
+						}
+						struct Student* tempStudent = currentStudent;
+						currentStudent = currentStudent->next;
+						free(tempStudent);
+					}
+					free(currentGrade);
+					printf("年级删除成功。\n");
+					return 1;
 				}
-				tempGrade2 = tempGrade->next;
-				tempGrade->next = tempGrade->next->next;
-				free(tempGrade2);
-				return 1;
+				prevGrade = currentGrade;
+				currentGrade = currentGrade->next;
 			}
-			tempGrade = tempGrade->next;
+			printf("找不到指定的年级。\n");
+			return 0;
 		}
+		tempMajor = tempMajor->next;
 	}
+	printf("找不到指定的专业。\n");
 	return 0;
 }
+
 //删除指定专业，返回值为1表示删除成功，返回值为0表示删除失败
 int delete_Major(struct Major** head_Major, char majorNum[10]) {
 	struct Major* tempMajor = *head_Major;
@@ -408,153 +466,146 @@ void query_Scores(struct Major** head_Major, int studentID) {
 		}
 		temp = temp->next;
 	}
+	return;
 }
 
-//保存个链表到文件，设计格式为：专业编号-年级-学生学号-学生平均学分绩点-学生排名-排名时间-课程名-成绩-修读学期-是否免修-是否挂科，
-// 每个数据之间用空格隔开，每个学生的成绩之间用逗号隔开，每个学生之间用分号隔开，每个年级之间用冒号隔开，每个专业之间用换行隔开
-// 返回值为1表示保存成功，返回值为0表示保存失败，返回值为-1表示文件打开失败
-int saveTo_StdGrade(struct Major** head_Major, char* filename) {
-	FILE* fp = fopen(filename, "w");
-	if (fp == NULL) {
-		return -1;
+// 保存链表数据到文件
+void saveTo_StdGrade(struct Major** head_Major, char* filename) {
+	FILE* file = fopen(filename, "w");
+	if (file == NULL) {
+		printf("无法打开文件 %s\n", filename);
+		return;
 	}
+
 	struct Major* tempMajor = *head_Major;
-	struct Grade* tempGrade;
-	struct Student* tempStudent;
-	struct SubScore* tempScore;
 	while (tempMajor != NULL) {
-		tempGrade = tempMajor->grade;
-		while (tempGrade != NULL) {
-			tempStudent = tempGrade->student;
-			while (tempStudent != NULL) {
-				fprintf(fp, "%s-%d-%d-%d-%d-%s", tempMajor->majorNum, tempGrade->gradeNum, tempStudent->studentID, tempStudent->GPA, tempStudent->rank, tempStudent->rankTime);
-				tempScore = tempStudent->scores;
-				while (tempScore != NULL) {
-					fprintf(fp, "-%s-%f-%s-%d-%d", tempScore->courseName, tempScore->score, tempScore->semester, tempScore->isExempted, tempScore->isFailed);
-					tempScore = tempScore->next;
-					if (tempScore != NULL) {
-						fprintf(fp, ",");
-					}
-				}
-				tempStudent = tempStudent->next;
-				if (tempStudent != NULL) {
-					fprintf(fp, ";");
-				}
-			}
-			tempGrade = tempGrade->next;
-			if (tempGrade != NULL) {
-				fprintf(fp, ":");
-			}
+		if (strcmp(tempMajor->majorNum, "0") == 0)
+		{
+			tempMajor = tempMajor->next;
+			continue;
 		}
+		fprintf(file, "Major: %s\n", tempMajor->majorNum);
+		struct Grade* tempGrade = tempMajor->grade;
+		while (tempGrade != NULL) {
+			if (tempGrade->gradeNum == 0)
+			{
+				tempGrade = tempGrade->next;
+				continue;
+			}
+			fprintf(file, "Grade: %d\n", tempGrade->gradeNum);
+
+			struct Student* tempStudent = tempGrade->student;
+			while (tempStudent != NULL) {
+				if (tempStudent->studentID == 0)
+				{
+					tempStudent = tempStudent->next;
+					continue;
+				}
+				fprintf(file, "Student: %d\n", tempStudent->studentID);
+
+				struct SubScore* tempScore = tempStudent->scores;
+				while (tempScore != NULL) {
+					if (strcmp(tempScore->courseName, "0") == 0)
+					{
+						tempScore = tempScore->next;
+						continue;
+					}
+					fprintf(file, "Score: %s %f %s %d %d\n", tempScore->courseName, tempScore->score, tempScore->semester, tempScore->isExempted, tempScore->isFailed);
+					tempScore = tempScore->next;
+				}
+
+				tempStudent = tempStudent->next;
+			}
+
+			tempGrade = tempGrade->next;
+		}
+
 		tempMajor = tempMajor->next;
-		if (tempMajor != NULL) {
-			fprintf(fp, "\n");
+	}
+
+	fclose(file);
+	printf("数据保存成功。\n");
+}
+
+// 从文件读入数据到链表
+void loadFrom_StdGrade(struct Major** head_Major, char* filename) {
+	FILE* file = fopen(filename, "r");
+	if (file == NULL) {
+		printf("无法打开文件 %s\n", filename);
+		return;
+	}
+
+	clear_StdGrade(head_Major);
+
+	char line[100];
+	struct Major* currentMajor = NULL;
+	struct Grade* currentGrade = NULL;
+	struct Student* currentStudent = NULL;
+
+	while (fgets(line, sizeof(line), file)) {
+		if (strncmp(line, "Major: ", 7) == 0) {
+			// 添加专业节点
+			char majorNum[10];
+			sscanf(line, "Major: %s", majorNum);
+			add_Major(head_Major, majorNum);
+			currentMajor = search_Major(head_Major, majorNum);
+		}
+		else if (strncmp(line, "Grade: ", 7) == 0) {
+			// 添加年级节点
+			int gradeNum;
+			sscanf(line, "Grade: %d", &gradeNum);
+			add_Grade(currentMajor, gradeNum);
+			currentGrade = search_Grade(&currentMajor, gradeNum);
+		}
+		else if (strncmp(line, "Student: ", 9) == 0) {
+			// 添加学生节点
+			int studentID;
+			sscanf(line, "Student: %d", &studentID);
+			add_Student(head_Major, studentID, currentMajor->majorNum, currentGrade->gradeNum);
+			currentStudent = search_Student(head_Major, studentID);
+		}
+		else if (strncmp(line, "Score: ", 7) == 0) {
+			// 添加成绩节点
+			char courseName[20];
+			float score;
+			char semester[5];
+			int isExempted, isFailed;
+			sscanf(line, "Score: %s %f %s %d %d", courseName, &score, semester, &isExempted, &isFailed);
+			add_Score(head_Major, currentStudent->studentID, courseName, score, semester, isExempted, isFailed);
 		}
 	}
-	fclose(fp);
-	return 1;
+
+	fclose(file);
+	printf("数据读取成功。\n");
 }
 
-// 从文件加载学生信息
-int loadFrom_StdGrade(struct Major** head_Major, char* filename) {
-    FILE* fp = fopen(filename, "r");
-    if (fp == NULL) {
-        return -1;
-    }
-    char line[1000];
-    while (fgets(line, sizeof(line), fp)) {
-        char* token;
-        char* majorNum;
-        int gradeNum;
-        int studentID;
-        int GPA;
-        int rank;
-        char rankTime[20];
-        char* courseName;
-        float score;
-        char semester[5];
-        int isExempted;
-        int isFailed;
-        
-        token = strtok(line, "-");
-        majorNum = token;
-        
-        token = strtok(NULL, "-");
-        gradeNum = atoi(token);
-        
-        token = strtok(NULL, "-");
-        studentID = atoi(token);
-        
-        token = strtok(NULL, "-");
-        GPA = atoi(token);
-        
-        token = strtok(NULL, "-");
-        rank = atoi(token);
-        
-        token = strtok(NULL, "-");
-        strcpy(rankTime, token);
-        
-        struct Major* tempMajor = search_Major(head_Major, majorNum);
-        if (tempMajor == NULL) {
-            tempMajor = create_Major();
-            add_Major(head_Major, majorNum);
-        }
-        
-        struct Grade* tempGrade = search_Grade(tempMajor, gradeNum);
-        if (tempGrade == NULL) {
-            tempGrade = create_Grade(tempMajor);
-            add_Grade(tempMajor, gradeNum);
-        }
-        
-        struct Student* tempStudent = create_Student(tempGrade);
-        tempStudent->studentID = studentID;
-        tempStudent->GPA = GPA;
-        tempStudent->rank = rank;
-        strcpy(tempStudent->rankTime, rankTime);
-        
-        token = strtok(NULL, "-");
-        while (token != NULL) {
-            courseName = token;
-            
-            token = strtok(NULL, "-");
-            score = atof(token);
-            
-            token = strtok(NULL, "-");
-            strcpy(semester, token);
-            
-            token = strtok(NULL, "-");
-            isExempted = atoi(token);
-            
-            token = strtok(NULL, ",");
-            if (token != NULL) {
-                isFailed = atoi(token);
-            } else {
-                isFailed = atoi(token);
-                token = strtok(NULL, "-");
-            }
-            
-            struct SubScore* tempScore = (struct SubScore*)malloc(sizeof(struct SubScore));
-            strcpy(tempScore->courseName, courseName);
-            tempScore->score = score;
-            strcpy(tempScore->semester, semester);
-            tempScore->isExempted = isExempted;
-            tempScore->isFailed = isFailed;
-            tempScore->next = NULL;
-            
-            if (tempStudent->scores == NULL) {
-                tempStudent->scores = tempScore;
-            } else {
-                struct SubScore* temp = tempStudent->scores;
-                while (temp->next != NULL) {
-                    temp = temp->next;
-                }
-                temp->next = tempScore;
-            }
-            
-            token = strtok(NULL, "-");
-        }
-    }
-    fclose(fp);
-    return 1;
-}
+// 清空链表数据
+void clear_StdGrade(struct Major** head_Major) {
+	struct Major* currentMajor = *head_Major;
+	while (currentMajor != NULL) {
+		struct Grade* currentGrade = currentMajor->grade;
+		while (currentGrade != NULL) {
+			struct Student* currentStudent = currentGrade->student;
+			while (currentStudent != NULL) {
+				struct SubScore* currentScore = currentStudent->scores;
+				while (currentScore != NULL) {
+					struct SubScore* tempScore = currentScore;
+					currentScore = currentScore->next;
+					free(tempScore);
+				}
+				struct Student* tempStudent = currentStudent;
+				currentStudent = currentStudent->next;
+				free(tempStudent);
+			}
+			struct Grade* tempGrade = currentGrade;
+			currentGrade = currentGrade->next;
+			free(tempGrade);
+		}
+		struct Major* tempMajor = currentMajor;
+		*head_Major = currentMajor->next;
+		free(tempMajor);
+		currentMajor = *head_Major;
+	}
 
+	printf("链表数据已清空。\n");
+}

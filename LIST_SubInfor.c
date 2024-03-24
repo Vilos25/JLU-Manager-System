@@ -130,6 +130,20 @@ void saveTo_SubInfor(struct SubInfor* head_SubInfor, const char* filename) {
     fclose(file);
     //printf("科目信息已保存到文件。\n");
 }
+//清空链表
+void clear_SubInfor(struct SubInfor** head_SubInfor) {
+	struct SubInfor* temp = *head_SubInfor;
+	struct SubInfor* next = NULL;
+
+	while (temp != NULL) {
+		next = temp->next;
+		free(temp);
+		temp = next;
+	}
+
+	*head_SubInfor = NULL;
+	//printf("链表已清空。\n");
+}
 
 // 从文件中加载科目信息到链表
 void loadFrom_SubInfor(struct SubInfor** head_SubInfor, const char* filename) {
@@ -141,25 +155,24 @@ void loadFrom_SubInfor(struct SubInfor** head_SubInfor, const char* filename) {
     }
 
     // 清空链表
-    while (*head_SubInfor != NULL) {
-        struct SubInfor* temp = *head_SubInfor;
-        *head_SubInfor = (*head_SubInfor)->next;
-        free(temp);
-    }
-
+    clear_SubInfor(head_SubInfor);
+  
     char line[100];
 
     while (fgets(line, sizeof(line), file)) {
         char* token = strtok(line, ",");
         struct SubInfor* newNode = (struct SubInfor*)malloc(sizeof(struct SubInfor));
-        newNode->next = NULL;
-        strcpy(newNode->SubName, token);
-        token = strtok(NULL, ",");
-        strcpy(newNode->SubInforNum, token);
-        token = strtok(NULL, ",");
-        newNode->SubInforScore = atof(token);
-        token = strtok(NULL, ",");
-        newNode->SubRequired = atoi(token);
+        if (newNode != NULL)
+        {
+            newNode->next = NULL;
+            strcpy(newNode->SubName, token);
+            token = strtok(NULL, ",");
+            strcpy(newNode->SubInforNum, token);
+            token = strtok(NULL, ",");
+            newNode->SubInforScore = atof(token);
+            token = strtok(NULL, ",");
+            newNode->SubRequired = atoi(token);
+        }
 
         insert_SubInfor(head_SubInfor, newNode);
     }

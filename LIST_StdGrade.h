@@ -1,6 +1,6 @@
 #ifndef STDGRADE_H
 #define STDGRADE_H
-struct Major* head_StdGrade;
+
 //专业节点结构体
 struct Major {
     char majorNum[10];  // 专业编号
@@ -43,16 +43,16 @@ void add_Major(struct Major** head_Major, char majorNum[10]);
 struct Major* search_Major(struct Major** head_Major, const char* majorNum);
 
 // 创建年级头节点并连接到专业节点
-struct Grade* create_Grade(struct Major* major);
+struct Grade* create_Grade();
 
 // 添加年级节点包含通过年级查重的功能
-void add_Grade(struct Major* major, int gradeNum);
+void add_Grade(struct Major* Major, int gradeNum);
 
 // 通过年级查找年级节点并返回其地址
-struct Grade* search_Grade(struct Major* major, int gradeNum);
+struct Grade* search_Grade(struct Major** head_Major, int gradeNum);
 
 // 创建学生节点并连接到年级节点
-struct Student* create_Student(struct Grade* grade);
+struct Student* create_Student();
 
 // 添加学生节点包含通过在整个链表中进行学号查重的功能
 void add_Student(struct Major** head_Major, int studentID, char majorNum[10], int gradeNum);
@@ -87,9 +87,10 @@ void query_Scores(struct Major** head_Major, int studentID);
 // 保存个链表到文件，设计格式为：专业编号-年级-学生学号-学生平均学分绩点-学生排名-排名时间-课程名-成绩-修读学期-是否免修-是否挂科，
 // 每个数据之间用空格隔开，每个学生的成绩之间用逗号隔开，每个学生之间用分号隔开，每个年级之间用冒号隔开，每个专业之间用换行隔开
 // 返回值为1表示保存成功，返回值为0表示保存失败，返回值为-1表示文件打开失败
-int saveTo_StdGrade(struct Major** head_Major, char* filename);
+void saveTo_StdGrade(struct Major** head_Major, char* filename);
 
 // 从文件加载学生信息
-int loadFrom_StdGrade(struct Major** head_Major, char* filename);
+void loadFrom_StdGrade(struct Major** head_Major, char* filename);
 
+void clear_StdGrade(struct Major** head_Major);
 #endif
