@@ -389,6 +389,11 @@ int update_Score(struct Major** head_Major, int studentID, char courseName[20], 
 		printf("该课程已被重修，已修改重修成绩");
 		Sleep(1000);
 		retake->score = newScore;
+		retake->perGPA = exchange_GPA(newScore);
+		if(first->score >= 60)
+			first->isFailed = 0;
+		else
+			first->isFailed = 1;
 		return 1;
 	}
 	else if(first != NULL){
@@ -398,6 +403,11 @@ int update_Score(struct Major** head_Major, int studentID, char courseName[20], 
 		if (choice == 1)
 		{
 			first->score = newScore;
+			first->perGPA = exchange_GPA(newScore);
+			if (first->score >= 60)
+				first->isFailed = 0;
+			else
+				first->isFailed = 1;
 			return 1;
 		}
 		else {

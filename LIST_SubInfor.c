@@ -195,14 +195,14 @@ void delete_SubInfor(struct SubInfor** head_SubInfor, const char* subNum) {
     //判断表是否为空
     if (temp == NULL)
     {
-        printf("库为空！\n");
+        printf("\n\t\t\t库为空！\n");
         return;
     }
     // 头节点就是要删除的节点
     if (temp != NULL && strcmp(temp->SubInforNum, subNum) == 0) {
         *head_SubInfor = temp->next;
         free(temp);
-        printf("科目已删除。\n");
+        printf("\n\t\t\t科目已删除。\n");
         return;
     }
 
@@ -213,7 +213,7 @@ void delete_SubInfor(struct SubInfor** head_SubInfor, const char* subNum) {
     }
 
     if (temp == NULL) {
-        printf("找不到要删除的科目。\n");
+        printf("\n\t\t\t找不到要删除的科目。\n");
         return;
     }
 
@@ -224,5 +224,5 @@ void delete_SubInfor(struct SubInfor** head_SubInfor, const char* subNum) {
         prev->next = temp->next;
     }
     free(temp);
-    printf("科目已删除。\n");
+    printf("\n\t\t\t科目已删除。\n");
 }

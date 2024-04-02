@@ -265,15 +265,23 @@ void modify_Teacher(TeaInfor* head_TeaInfor, int id) {
             current->teacher.majorCode = Input_Raw_Integer(2);
             cursor(26, xy += 1);
             printf("所带年级:\n");
-
             cursor(26, xy += 1);
-            printf("输入第一个年级:");
-            current->teacher.grades[0] = Input_Raw_Integer(2);
-            cursor(26, xy += 1);
-            printf("输入第二个年级（没有填0）:");
-            current->teacher.grades[1] = Input_Raw_Integer(2);
-            //scanf("%d", &current->teacher.grades[0]);
-            //scanf("%d", &current->teacher.grades[1]);
+            printf("请输入带的年级数量 (1 或 2): ");
+            int numGrades = Input_1toNum(2);
+            if (numGrades == 1) {
+				cursor(26, xy += 1);
+				printf("输入年级:");
+				current->teacher.grades[0] = Input_Raw_Integer(2);
+				current->teacher.grades[1] = 0;
+			}
+			else if (numGrades == 2) {
+				cursor(26, xy += 1);
+				printf("输入第一个年级: ");
+				current->teacher.grades[0] = Input_Raw_Integer(2);
+				cursor(26, xy += 1);
+				printf("输入第二个年级: ");
+				current->teacher.grades[1] = Input_Raw_Integer(2);
+			}
             cursor(26, xy += 1);
             printf("性别: ");
             //scanf(" %c", &current->teacher.gender);

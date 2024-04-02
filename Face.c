@@ -1320,6 +1320,9 @@ void Menu_adminTeacher()
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
+            system("cls");
+            system("color F0");
+            HideCursor();
             print_AllTeachers(head_TeaInfor);
             system("pause");
             break;
@@ -1937,13 +1940,14 @@ void Menu_adminStdGrade() {
 
 //科目列表菜单
 void Menu_SubInfor() {
-    system("cls");
-    system("color F0");
-    HideCursor();
-    cursor(26, 6);
-    printf("已进入科目列表管理菜单！");
+    
     int choice;
     while (1) {
+        system("cls");
+        system("color F0");
+        HideCursor();
+        cursor(26, 6);
+        printf("已进入科目列表管理菜单！");
         cursor(26, 7);
         printf("1. 插入/修改科目");
         cursor(26, 8);
@@ -1985,36 +1989,44 @@ void Menu_SubInfor() {
                 insert_SubInfor(&head_SubInfor, newNode);
                 printf("科目已插入到列表中。\n");
             }
+            system("pause");
             break;
         }
         case 2:
             system("cls");
             display_SubInfor(head_SubInfor);
+            system("pause");
             break;
         case 3:
             saveTo_SubInfor(head_SubInfor, FILENAME_SUB);
             cursor(26, 7);
             printf("科目信息已保存到文件。\n");
+            system("pause");
             break;
         case 4:
             loadFrom_SubInfor(&head_SubInfor, FILENAME_SUB);
             cursor(26, 7);
             printf("已从文件加载科目信息。\n");
+            system("pause");
             break;
         case 5: {
             char subNum[MAX_NUM_LENGTH];
             cursor(26, 7);
             printf("请输入要删除的科目编号：");
-            scanf("%s", subNum);
+            //scanf("%s", subNum);
+            Input_SubNum(subNum);
             delete_SubInfor(&head_SubInfor, subNum);
+            system("pause");
             break;
         }
         case 6:
             cursor(26, 7);
             printf("程序已退出。\n");
+            system("pause");
             return;
         default:
             printf("无效的选项，请重新输入。\n");
+            system("pause");
             break;
         }
         printf("\n");
