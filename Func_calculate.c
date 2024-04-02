@@ -26,10 +26,14 @@ float calculate_allmyscore(struct Major* head_Major,struct StdGrade* head_SubInf
         // 查找指定课程名的成绩节点
         struct SubScore* currentScore = current->scores;
         while (currentScore != NULL) {
-            if (currentScore->isval == 1)
+            if (currentScore->isval == 1) {
+                currentScore = currentScore->next;
                 continue;
-            if (currentScore->isretake != 0)
+            }
+            if (currentScore->isretake != 0) {
+                currentScore = currentScore->next;
                 continue;
+            }
             struct SubInfor* search = search_SubInfor(head_SubInfor, currentScore->courseName);
            if (search != NULL) {
                my_score += search->SubInforScore;
@@ -63,14 +67,20 @@ float calculate_myscore(struct Major* head_Major, struct StdGrade* head_SubInfor
         // 查找指定课程名的成绩节点
         struct SubScore* currentScore = (current->scores)->next;
         while (currentScore != NULL) {
-            if (currentScore->isval == 1)
+            if (currentScore->isval == 1) {
+                currentScore = currentScore->next;
                 continue;
-            if (currentScore->isretake != 0)
+            }
+            if (currentScore->isretake != 0) {
+                currentScore = currentScore->next;
                 continue;
+            }
             struct SubInfor* search = search_SubInfor(head_SubInfor, currentScore->courseName);   
             if (search != NULL) {
-                if (search->SubRequired == 0)
+                if (search->SubRequired == 0) {
+                    currentScore = currentScore->next;
                     continue;
+                }
                 my_score += search->SubInforScore;
                 search = search->next;
             }

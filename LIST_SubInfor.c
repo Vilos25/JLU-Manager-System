@@ -30,7 +30,7 @@ struct SubInfor* create_SubInfor() {
         cursor(26, xy += 1);
         printf("请输入科目分数：");
         //scanf("%f", &(newNode->SubInforScore));
-        newNode->SubInforScore = Input_Float(3, 1);
+        newNode->SubInforScore = Input_Float(2, 2);
         cursor(26, xy += 1);
         printf("请输入科目是否为计入保研GPA科目（2 表示是，1 表示否）：");
         //scanf("%d", &(newNode->SubRequired));

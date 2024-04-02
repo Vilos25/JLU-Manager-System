@@ -29,10 +29,10 @@ struct SubScore {
     char semester[15];  // 修读学期
     float score;  // 课程成绩
     float perGPA;  // 获得绩点
-    int isExempted;  // 是否免修
-    int isretake;    //重修重考
-    int isFailed;  // 是否及格
-    int isval;  // 是否有效
+    int isExempted;  // 是否免修0否1是
+    int isretake;    //重修重考0否1是
+    int isFailed;  // 是否挂科0否1是
+    int isval;  // 是否有效0是1否
     struct SubScore* next;  // 下一个学生成绩节点的指针
 };
 //文件中函数声明和功能注释
@@ -72,7 +72,7 @@ void add_Student(struct Major** head_Major, int studentID, int majorNum, int gra
 struct Student* search_Student(struct Major** head_Major, int studentID);
 
 // 给学生节点添加成绩，包含通过课程名查重的功能，返回值为1表示添加成功，返回值为0表示添加失败，返回值为-1表示学生不存在，返回值为-2表示课程名重复
-int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[5], int isExempted, int isFailed);
+int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[5], int isExempted, int isval);
 
 // 修改指定学生的指定成绩，返回值为1表示修改成功，返回值为0表示修改失败，返回值为-1表示学生不存在，返回值为-2表示课程名不存在
 int update_Score(struct Major** head_Major, int studentID, char courseName[20], float newScore);

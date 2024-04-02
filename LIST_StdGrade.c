@@ -298,7 +298,7 @@ struct Student* search_Student(struct Major** head_Major, int studentID) {
 }
 
 //给学生节点添加成绩，包含通过课程名查重的功能，返回值为1表示添加成功，返回值为0表示添加失败，返回值为-1表示学生不存在，如果重复就标记为重修
-int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[5], int isExempted, int isFailed) {
+int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[5], int isExempted, int isval) {
 	struct Student* tempStudent = search_Student(head_Major, studentID);
 	if (tempStudent == NULL) {
 		return -1;
@@ -336,7 +336,7 @@ int add_Score(struct Major** head_Major, int studentID, char courseName[20], flo
 		newNode->isExempted = isExempted;
 		if (newNode->isExempted == 1)
 			newNode->score = 90.0;
-		newNode->isFailed = isFailed;
+		newNode->isval = isval;
 		if (newNode->score >= 60)
 			newNode->isFailed = 0;
 		else
@@ -688,10 +688,11 @@ int query_Scores(struct Major** head_Major, int studentID) {
     }
 	int g4 = 0, g3 = 0, g2 = 0, g1 = 0, g0 = 0;
     printf("学生学号：%d\n", tempStudent->studentID);
-    printf("%-15s %-21s %-7s %-12s %-12s %-10s %-12s %-10s %-10s\n", "课程编号", "课程名", "成绩", "修读学期", "获得绩点", "是否免修", "重修重考", "是否及格", "是否有效");
+    printf("%-15s %-22s %-8s %-8s %-13s %-10s %-8s %-8s %-8s %-8s\n", "课程编号", "课程名", "学分", "成绩", "修读学期", "获得绩点", "是否免修", "重修重考", "是否及格", "是否有效");
     while (temp != NULL) {
         // 通过课程号查找节点并返回其地址
-        printf("%-15s %-21s %-7.2f %-15s %-12.1f %-10s %-12s %-10s %-10s\n", temp->courseName, search_SubInfor(head_SubInfor, temp->courseName)->SubName,
+        printf("%-15s %-21s  %-7.1f %-8.2f %-16s %-10.1f %-8s %-8s %-8s %-8s\n", temp->courseName, search_SubInfor(head_SubInfor, temp->courseName)->SubName,
+			search_SubInfor(head_SubInfor, temp->courseName)->SubInforScore,
             temp->score, temp->semester, temp->perGPA, temp->isExempted == 1 ? "是" : "否", temp->isretake == 0 ? "初修" : "重修",
             temp->isFailed == 1 ? "挂科" : "", temp->isval == 1 ? "无效" : "有效");
 		if(temp->perGPA==4)

@@ -309,7 +309,7 @@ void Menu_Stu_bonus(BonusNote* Head, int ID)
         case 4:
             return;
         }
-    } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+    } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
     return;
 }
 
@@ -739,7 +739,7 @@ void Menu_StdGrade(int ID) {
     float score;
     char semester[5];
     int isExempted;
-    int isFailed;
+    int isval;
     float newScore;
     int teaGrade = 0;
     TeaInfor* Tea = search_TeacherByID(head_TeaInfor, ID);
@@ -880,24 +880,24 @@ void Menu_StdGrade(int ID) {
 				}
                 cursor(26, xy += 2);
                 printf("请输入成绩：");
-                score = Input_Float(3, 2);
+                score = Input_Float(2, 2);
                 cursor(26, xy += 2);
                 printf("请输入修读学期：");
                 Input_SemesterNum(semester);
                 cursor(26, xy += 2);
-                printf("请输入是否免修（1表示是，2表示否）：");
+                printf("请输入是否免修（1表示否，2表示是）：");
                 isExempted = Input_1toNum(2) - 1;
                 cursor(26, xy += 2);
-                printf("请输入是否挂科（1表示否，2表示是）：");
-                isFailed = Input_1toNum(2) - 1;
+                printf("请输入是否有效（1表示是，2表示否）：");
+                isval = Input_1toNum(2) - 1;
                 cursor(26, xy += 2);
-                if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == 1) {
+                if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == 1) {
                     printf("添加成功。\n");
                 }
-                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -1) {
+                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == -1) {
                     printf("学生不存在，添加失败。\n");
                 }
-                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -2) {
+                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == -2) {
                     printf("课程编号重复，添加失败。\n");
                 }
                 else {
@@ -905,7 +905,7 @@ void Menu_StdGrade(int ID) {
                     Sleep(1000);
                 }
                 continue;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         }
         case 2: {
@@ -952,7 +952,7 @@ void Menu_StdGrade(int ID) {
                 cursor(26, xy += 2);
                 printf("请输入新的成绩：");
                 //scanf("%f", &newScore);
-                newScore = Input_Float(3, 2);
+                newScore = Input_Float(2, 2);
                 if (update_Score(&head_Major, studentID, courseName, newScore) == 1) {
                     cursor(26, xy += 2);
                     printf("修改成功。\n");
@@ -978,7 +978,7 @@ void Menu_StdGrade(int ID) {
                 }
                 // break; 
                 continue;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
 
 
@@ -1049,7 +1049,7 @@ void Menu_StdGrade(int ID) {
                 }
                 //break;
                 continue;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         }
         case 4: {
@@ -1079,7 +1079,7 @@ void Menu_StdGrade(int ID) {
                 if (x->majorNum != teaMajor || y->gradeNum != teaGrade)
                 {
                     cursor(26, xy += 2);
-                    printf("你不是这个学生的辅导员，无法添加成绩\n");
+                    printf("你不是这个学生的辅导员，无法查看成绩\n");
                     Sleep(1000);
                     continue;
                 }
@@ -1106,35 +1106,34 @@ void Menu_StdGrade(int ID) {
                 a = calculate_allmyscore(head_Major, head_SubInfor, studentID);
                 xy = 0;
                 //cursor(26, xy += 2);
-                cursor(26, 19);
-                printf("获得总学分为: %.1f \t", a);
+                //cursor(26, 19);
+                printf("\n\t\t\t获得总学分为: %.1f \t", a);
                 float b;
                 b = calculate_myscore(head_Major, head_SubInfor, studentID);
                 //cursor(26, xy += 2);
-                cursor(26, 20);
-                printf("计入GPA学分为: %.1f \t", b);
+                //cursor(26, 20);
+                printf("\n\t\t\t计入GPA学分为: %.1f \t", b);
                 float c;
                 c = calculate_GPA(head_Major, studentID, head_SubInfor);
                 //cursor(26, xy += 2);
-                cursor(26, 21);
-                printf("GPA: %.5f \t", c);
+                //cursor(26, 21);
+                printf("\n\t\t\tGPA: %.5f \t", c);
                 ;
                 //cursor(26, xy += 2);
-                cursor(26, 22);
-                printf("素质加分GPA: %.2f \t", add_GPA);
+                //cursor(26, 22);
+                printf("\n\t\t\t素质加分GPA: %.2f \t", add_GPA);
                 //cursor(26, xy += 2);
-                cursor(26, 23);
-                printf("最终GPA: %.5f \t", c + add_GPA);
+                //cursor(26, 23);
+                printf("\n\t\t\t最终GPA: %.5f \t", c + add_GPA);
                 //cursor(26, xy += 2);
-                cursor(26, 24);
-                printf("排名/年级人数：%d/%d \n", result, calculate_GradeStudentNum(head_Major, teaMajor, teaGrade));
-                cursor(26, 25);
+                //cursor(26, 24);
+                printf("\n\t\t\t排名/年级人数：%d/%d \n\n", result, calculate_GradeStudentNum(head_Major, teaMajor, teaGrade));
                 system("pause");
                 //cursor(26, xy += 4);
                 cursor(26, 25);
                 Display_Single_BonusNote(Head_Bonus, studentID);// 18 打印 一个人 所有的加分项目
                 continue;
-            } while (cursor(30, 26), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (cursor(30, 40), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         }
         case 5: {
@@ -1264,7 +1263,7 @@ void Menu_adminTeacher()
                 printf("添加成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 2:
             do {
@@ -1291,7 +1290,7 @@ void Menu_adminTeacher()
                 printf("修改成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1318,7 +1317,7 @@ void Menu_adminTeacher()
                 printf("删除成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             print_AllTeachers(head_TeaInfor);
@@ -1385,7 +1384,7 @@ void Menu_adminStdInfor()
                 printf("添加成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 2:
             do {
@@ -1412,7 +1411,7 @@ void Menu_adminStdInfor()
                 printf("修改成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1439,7 +1438,7 @@ void Menu_adminStdInfor()
                 printf("删除成功。\n");
                 Sleep(1000);
                 break;
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             printAll_StdInfor(head_StdInfor, head_Major);
@@ -1467,7 +1466,7 @@ void Menu_adminStdGrade() {
     float score;
     char semester[5];
     int isExempted;
-    int isFailed;
+    int isval;
     float newScore;
     while (1) {
         system("cls");
@@ -1527,7 +1526,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 10);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 2:
             do {
@@ -1553,7 +1552,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 10);
                 printf("删除成功。\n");
                 Sleep(1000);
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1590,7 +1589,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 12);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             do {
@@ -1627,7 +1626,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 12);
                 printf("删除成功。\n");
                 Sleep(1000);
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 5:
             do {
@@ -1674,7 +1673,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 14);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 6:
             do {
@@ -1703,22 +1702,22 @@ void Menu_adminStdGrade() {
                     continue;
                 }
                 printf("请输入成绩：");
-                scanf("%f", &score);
+                score=Input_Float(2,2);
                 printf("请输入修读学期：");
-                scanf("%s", semester);
-                printf("请输入是否免修（0表示否，1表示是）：");
-                scanf("%d", &isExempted);
-                printf("请输入是否挂科（0表示否，1表示是）：");
-                scanf("%d", &isFailed);
-                if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == 1) {
+                Input_SemesterNum(semester);
+                printf("请输入是否免修（1表示否，2表示是）：");
+                isExempted=Input_1toNum(2)-1;
+                printf("请输入是否有效（1表示是，2表示否）：");
+                isval=Input_1toNum(2)-1;
+                if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == 1) {
                     cursor(26, 10);
                     printf("添加成功。\n");
                 }
-                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -1) {
+                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == -1) {
                     cursor(26, 10);
                     printf("学生不存在，添加失败。\n");
                 }
-                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isFailed) == -2) {
+                else if (add_Score(&head_Major, studentID, courseName, score, semester, isExempted, isval) == -2) {
                     cursor(26, 10);
                     printf("课程编号重复，添加失败。\n");
                 }
@@ -1727,7 +1726,7 @@ void Menu_adminStdGrade() {
                     printf("添加失败。\n");
                     Sleep(1000);
                 }
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 7:
             do {
@@ -1774,7 +1773,7 @@ void Menu_adminStdGrade() {
                     printf("修改失败。\n");
                     Sleep(1000);
                 }
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 8:
             do {
@@ -1819,7 +1818,7 @@ void Menu_adminStdGrade() {
                     printf("删除失败。\n");
                     Sleep(1000);
                 }
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 9:
             do {
@@ -1838,7 +1837,7 @@ void Menu_adminStdGrade() {
                     printf("删除失败。\n");
                     Sleep(1000);
                 }
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 10:
             do {
@@ -1892,7 +1891,7 @@ void Menu_adminStdGrade() {
                     Display_Single_BonusNote(Head_Bonus, studentID);// 18 打印 一个人 所有的加分项目
                     system("pause");
                 }
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 11:
             do {
@@ -1922,7 +1921,7 @@ void Menu_adminStdGrade() {
                 }
                 display_Grade(head_Major, majorNum, gradeNum);
                 system("pause");
-            } while (cursor(26, 25), printf("是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 12:
             return;
