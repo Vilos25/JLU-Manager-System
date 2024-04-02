@@ -405,7 +405,7 @@ void Delet_Bonus(BonusNote* Head, int stu_ID) {
         printf("\t\t\t所有作者/顺序：\t%s\n", pcurrent3->Writers);
         printf("\t\t\t期刊名称/会议名称：\t%s\n", pcurrent3->Journal_Conference);
         printf("\t\t\t发表时间：\t%s\n", pcurrent3->Time);
-        printf("\t\t\t卷/期：\t%s\t%s\t%s\n", pcurrent3->Volume_Page[0]);
+        printf("\t\t\t卷/期：\t%s\n", pcurrent3->Volume_Page[0]);
         printf("\t\t\t论文号: \t%s\n", pcurrent3->Volume_Page[1]);
         printf("\t\t\t页码范围: \t%s\n", pcurrent3->Volume_Page[2]);
         //printf("\t\t\t审核状态: \t%d\n", pcurrent->Attribute);
@@ -1696,7 +1696,10 @@ void Menu_adminStdGrade() {
                 }
                 cursor(26, 8);
                 printf("请输入课程编号：");
-                scanf("%s", courseName);
+                //scanf("%s", courseName);
+                Input_SubNum(courseName);
+                
+
                 //判断课程编号是否在课程信息中
                 if (search_SubInfor(head_SubInfor, courseName) == NULL)
                 {
@@ -1749,7 +1752,10 @@ void Menu_adminStdGrade() {
                 }
                 cursor(26, 8);
                 printf("请输入课程编号：");
-                scanf("%s", courseName);
+                //scanf("%s", courseName);
+                Input_SubNum(courseName);
+                
+
                 //判断课程编号是否在课程信息中
                 if (search_SubInfor(head_SubInfor, courseName) == NULL)
                 {
@@ -1759,7 +1765,10 @@ void Menu_adminStdGrade() {
                     continue;
                 }
                 printf("请输入新的成绩：");
-                scanf("%f", &newScore);
+                //scanf("%f", &newScore);
+                newScore = Input_Float(2, 2);
+
+
                 if (update_Score(&head_Major, studentID, courseName, newScore) == 1) {
                     cursor(26, 10);
                     printf("修改成功。\n");
@@ -1796,7 +1805,9 @@ void Menu_adminStdGrade() {
                 }
                 cursor(26, 8);
                 printf("请输入课程编号：");
-                scanf("%s", courseName);
+                //scanf("%s", courseName);
+                Input_SubNum(courseName);
+                
                 //判断课程编号是否在课程信息中
                 if (search_SubInfor(head_SubInfor, courseName) == NULL)
                 {

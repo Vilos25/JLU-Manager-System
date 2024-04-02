@@ -185,7 +185,7 @@ void loadFrom_SubInfor(struct SubInfor** head_SubInfor, const char* filename) {
     }
 
     fclose(file);
-    printf("已从文件加载科目信息列表。\n");
+    printf("课程信息列表加载成功！\n");
 }
 
 // 删除指定科目节点

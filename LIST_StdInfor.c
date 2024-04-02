@@ -158,15 +158,25 @@ void print_StdInfor(StdInfor* head, struct Major* head_Major, int studentId) {
             else
                 printf("性别：女\n");
             struct Major* acc = search_MajorByStudentID(head_Major, studentId);
-            int i = acc->majorNum / 100; int j = acc->majorNum % 100;
-            printf("专业：%s—", All_Aca[i]);
-            printf("%s\t", ALL_Prof[i][j]);
-            printf("班级：%d \t", current->class);
-            printf("政治面貌：%s \n", current->politicalStatus);
-            printf("手机号码：%s \t", current->phoneNumber);
-            printf("电子邮箱：%s \t", current->email);
-            printf("是否在读：%s \n", current->isStudying ? "是" : "否");
-
+            if (acc != NULL)
+            {
+                int i = acc->majorNum / 100; int j = acc->majorNum % 100;
+                printf("专业：%s—", All_Aca[i]);
+                printf("%s\t", ALL_Prof[i][j]);
+                printf("班级：%d \t", current->class);
+                printf("政治面貌：%s \n", current->politicalStatus);
+                printf("手机号码：%s \t", current->phoneNumber);
+                printf("电子邮箱：%s \t", current->email);
+                printf("是否在读：%s \n", current->isStudying ? "是" : "否");
+            }
+            else {
+                printf("专业：未知\t");
+				printf("班级：%d \t", current->class);
+				printf("政治面貌：%s \n", current->politicalStatus);
+				printf("手机号码：%s \t", current->phoneNumber);
+				printf("电子邮箱：%s \t", current->email);
+				printf("是否在读：%s \n", current->isStudying ? "是" : "否");
+            }
             return;
         }
         current = current->next;

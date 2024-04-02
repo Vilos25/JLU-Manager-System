@@ -31,41 +31,50 @@ int Login_Register_Main(int* ID)
 	AccountNode* Teahead = Find_DiferHead(Head, 2);
 	AccountNode* Admhead = Find_DiferHead(Head, 3);//Adm：administator 的缩写，意为管理员。
 
-	cursor(35, 3);
-	printf("          欢迎进入吉林大学本科生成绩管理系统！\n");
 Laststep1: //以下所有顶格写的都是跳转回上一步的入口。
 	setjmp(Laststep4);
 	system("cls");
-	cursor(30, 6);
+	printf("\n\n");
+	printf("\t\t\t\t\t            __   __      __  __\n");
+	printf("\t\t\t\t\t           / /  / /     / / / /\n");
+	printf("\t\t\t\t\t      __  / /  / /     / / / /\n");
+	printf("\t\t\t\t\t     / /_/ /  / /___  / /_/ /\n");
+	printf("\t\t\t\t\t     \\____/  /_____/  \\____/\n");
+	printf("\n");
+	printf("\t\t\t\t\t* - - - - - - - - - - - - - - - - *\n");
+	printf("\t\t\t\t\t|   <吉林大学> 学生成绩管理系统   |\n");
+	printf("\t\t\t\t\t* - - - - - - - - - - - - - - - - *\n");
+	int y = 12;
+	cursor(30, y);
 	printf("********************************************************\n");
-	cursor(30, 17);
+	cursor(30, y++);
 	printf("********************************************************\n");
-	cursor(30, 8);
+	cursor(30, y++);
 	printf("*********************              *********************\n");
-	cursor(30, 9);
-	printf("******************       登陆界面     ******************\n");
-	cursor(30, 10);
+	cursor(30, y++);
+	printf("******************      <请登录>      ******************\n");
+	cursor(30, y++);
 	printf("****************                        ****************\n");
-	cursor(30, 11);
+	cursor(30, y++);
 	printf("****************   1：登录学生账号      ****************\n");
-	cursor(30, 12);
+	cursor(30, y++);
 	printf("****************   2：登录教师账号      ****************\n");
-	cursor(30, 13);
+	cursor(30, y++);
 	printf("****************   3：登录管理员账号    ****************\n");
-	cursor(30, 14);
+	cursor(30, y++);
 	printf("****************   4：退出              ****************\n");
-	cursor(30, 15);
+	cursor(30, y++);
 	printf("******************                    ******************\n");
-	cursor(30, 16);
+	cursor(30, y++);
 	printf("***********************          ***********************\n");
-	cursor(30, 17);
+	cursor(30, y++);
 	printf("********************************************************\n");
-	cursor(30, 18);
+	cursor(30, y++);
 	printf("********************************************************\n");
 	int Choice;
 
 	do {
-		cursor(32, 24);
+		cursor(32, y+=2);
 		printf("请输入你的选项:");
 		Choice = Input_1toNum(4); //输入正确的单个选项数字（输入已包含纠正输入错误功能）。
 	} while (!(1 <= Choice && Choice <= 4));

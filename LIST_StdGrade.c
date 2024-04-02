@@ -561,7 +561,7 @@ void display_Grade(struct Major* head_Major, int majorNum, int gradeNum) {
 	int tot = calculate_GradeStudentNum(head_Major, majorNum, gradeNum);
 	while (tempStudent != NULL) {
 		if(line==0)
-			printf("\t%s-%s——%d级  学生成绩————第%d页\n\n", All_Aca[majorNum / 100], ALL_Prof[majorNum / 100][majorNum % 100], gradeNum, Page++);
+		printf("\t%s-%s——%d级  学生成绩————第%d页\n\n", All_Aca[majorNum / 100], ALL_Prof[majorNum / 100][majorNum % 100], gradeNum, Page++);
 		printf("序号：%d \t学号：%d\t\t", cnt++, tempStudent->studentID);
 		tempStudent->GPA = calculate_GPA(head_Major, tempStudent->studentID, head_SubInfor);
 		printf("GPA：%f\t\t", tempStudent->GPA + tempStudent->add_GPA);
@@ -1115,7 +1115,7 @@ void loadFrom_StdGrade(struct Major** head_Major, char* filename) {
 	//free(jsonBufferCopy);
 	fclose(file);
 
-	printf("学生成绩数据加载成功\n");
+	printf("学生成绩数据加载成功！\n");
 }
 
 // 清空链表数据
@@ -1146,7 +1146,7 @@ void clear_StdGrade(struct Major** head_Major) {
 		currentMajor = *head_Major;
 	}
 
-	printf("链表数据已清空。\n");
+	printf("链表数据已初始化\n");
 }
 
 
