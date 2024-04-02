@@ -108,6 +108,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>
+      </EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -127,22 +129,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="LIST_Bonus.c" />
     <ClCompile Include="Face.c" />
     <ClCompile Include="Free_List.c" />
     <ClCompile Include="Free_List.h" />
+    <ClCompile Include="Func_calculate.c" />
     <ClCompile Include="Func_isValid.c" />
     <ClCompile Include="LIST_StdGrade.c" />
+    <ClCompile Include="LIST_StdInfor.c" />
     <ClCompile Include="LIST_SubInfor.c" />
+    <ClCompile Include="Login_Register.c" />
     <ClCompile Include="page.c" />
     <ClCompile Include="LIST_TeaInfor.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="LIST_Bonus.h" />
     <ClInclude Include="Face.h" />
+    <ClInclude Include="Func_calculate.h" />
     <ClInclude Include="Func_isValid.h" />
     <ClInclude Include="LIST_StdGrade.h" />
     <ClInclude Include="LIST_SubInfor.h" />
+    <ClInclude Include="Login_Register.h" />
     <ClInclude Include="page.h" />
     <ClInclude Include="LIST_TeaInfor.h" />
+    <ClInclude Include="LIST_StdInfor.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LIST_Account.txt" />
+    <Text Include="LIST_BonusDev_Comp.txt" />
+    <Text Include="LIST_BonusDev_Paper.txt" />
+    <Text Include="LIST_BonusDev_Proj.txt" />
+    <Text Include="LIST_Bonus_Account.txt" />
+    <Text Include="LIST_newBonusDev_Comp.txt" />
+    <Text Include="LIST_newBonusDev_Paper.txt" />
+    <Text Include="LIST_newBonusDev_Proj.txt" />
+    <Text Include="List_New_Account.txt" />
+    <Text Include="LIST_StdGrade.txt" />
+    <Text Include="LIST_StdInfor.txt" />
+    <Text Include="LIST_SubInfor.txt" />
+    <Text Include="LIST_TeaInfor.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -39,6 +39,18 @@
     <ClCompile Include="LIST_TeaInfor.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Func_calculate.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Login_Register.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LIST_StdInfor.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="LIST_Bonus.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LIST_SubInfor.h">
@@ -59,5 +71,58 @@
     <ClInclude Include="LIST_TeaInfor.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Func_calculate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Login_Register.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LIST_StdInfor.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="LIST_Bonus.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="LIST_StdGrade.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_Account.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="List_New_Account.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_SubInfor.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_StdInfor.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_TeaInfor.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_Bonus_Account.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_BonusDev_Comp.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_BonusDev_Paper.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_BonusDev_Proj.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_newBonusDev_Comp.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_newBonusDev_Paper.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="LIST_newBonusDev_Proj.txt">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>

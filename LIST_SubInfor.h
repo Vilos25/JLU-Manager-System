@@ -3,7 +3,7 @@
 
 struct SubInfor* head_SubInfor;
 
-#define MAX_NAME_LENGTH 20
+#define MAX_NAME_LENGTH 30
 #define MAX_NUM_LENGTH 15
 struct SubInfor {
     char SubName[MAX_NAME_LENGTH];

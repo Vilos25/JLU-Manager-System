@@ -9,25 +9,32 @@
 struct SubInfor* create_SubInfor() {
     struct SubInfor* newNode = (struct SubInfor*)malloc(sizeof(struct SubInfor));
     if (newNode != NULL) {
+        int xy = 20;
+        cursor(26, xy);
         printf("请输入科目名称：");
         scanf("%s", newNode->SubName);
 
         while (1) {
+            cursor(26, xy+=1);
             printf("请输入科目编号（两位字母加八位数字）：");
-            scanf("%s", newNode->SubInforNum);
-
+            //scanf("%s", newNode->SubInforNum);
+            Input_SubNum(newNode->SubInforNum);
             if (isValid_SubNum(newNode->SubInforNum)) {
                 break;
             }
             else {
+                cursor(26, xy += 1);
                 printf("课程编号格式不正确，请重新输入。\n");
             }
         }
-
+        cursor(26, xy += 1);
         printf("请输入科目分数：");
-        scanf("%f", &(newNode->SubInforScore));
-        printf("请输入科目是否为必修（1 表示是，0 表示否）：");
-        scanf("%d", &(newNode->SubRequired));
+        //scanf("%f", &(newNode->SubInforScore));
+        newNode->SubInforScore = Input_Float(3, 1);
+        cursor(26, xy += 1);
+        printf("请输入科目是否为计入保研GPA科目（2 表示是，1 表示否）：");
+        //scanf("%d", &(newNode->SubRequired));
+        newNode->SubRequired = Input_1toNum(2) - 1;
 
         newNode->next = NULL;
     }
@@ -102,12 +109,12 @@ void display_SubInfor(struct SubInfor* head_SubInfor) {
         printf("名称： %s\n", temp->SubName);
         printf("编号： %s\n", temp->SubInforNum);
         printf("分数： %.2f\n", temp->SubInforScore);
-        printf("是否必修： %s\n", temp->SubRequired ? "是" : "否");
+        printf("是否计入保研GPA： %s\n", temp->SubRequired ? "是" : "否");
 
         temp = temp->next;
         count++;
     }
-    printf("库中课程总数为：%d\n", count-1);
+    printf("库中课程总数为：%d\n", count - 1);
 }
 
 // 将链表中的科目信息保存到文件
@@ -132,17 +139,17 @@ void saveTo_SubInfor(struct SubInfor* head_SubInfor, const char* filename) {
 }
 //清空链表
 void clear_SubInfor(struct SubInfor** head_SubInfor) {
-	struct SubInfor* temp = *head_SubInfor;
-	struct SubInfor* next = NULL;
+    struct SubInfor* temp = *head_SubInfor;
+    struct SubInfor* next = NULL;
 
-	while (temp != NULL) {
-		next = temp->next;
-		free(temp);
-		temp = next;
-	}
+    while (temp != NULL) {
+        next = temp->next;
+        free(temp);
+        temp = next;
+    }
 
-	*head_SubInfor = NULL;
-	//printf("链表已清空。\n");
+    *head_SubInfor = NULL;
+    //printf("链表已清空。\n");
 }
 
 // 从文件中加载科目信息到链表
@@ -156,7 +163,7 @@ void loadFrom_SubInfor(struct SubInfor** head_SubInfor, const char* filename) {
 
     // 清空链表
     clear_SubInfor(head_SubInfor);
-  
+
     char line[100];
 
     while (fgets(line, sizeof(line), file)) {
@@ -178,7 +185,7 @@ void loadFrom_SubInfor(struct SubInfor** head_SubInfor, const char* filename) {
     }
 
     fclose(file);
-    //printf("已从文件加载科目信息。\n");
+    printf("已从文件加载科目信息列表。\n");
 }
 
 // 删除指定科目节点
@@ -189,7 +196,7 @@ void delete_SubInfor(struct SubInfor** head_SubInfor, const char* subNum) {
     if (temp == NULL)
     {
         printf("库为空！\n");
-            return;
+        return;
     }
     // 头节点就是要删除的节点
     if (temp != NULL && strcmp(temp->SubInforNum, subNum) == 0) {
