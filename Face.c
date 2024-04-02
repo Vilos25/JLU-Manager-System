@@ -1503,7 +1503,7 @@ void Menu_adminStdGrade() {
         printf("12. 退出");
         cursor(26, 29);
         printf("请输入您的选择：");
-        choice = Input_intNumber(2);
+        choice = Input_intNumberover(2);
         switch (choice) {
         case 1:
             do {

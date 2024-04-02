@@ -237,6 +237,35 @@ int Input_intNumber(int cnt) {
     return atoi(buffer);
 }
 
+int Input_intNumberover(int cnt) {
+    char buffer[20] = { 0 }; // buffer[Num + 1]
+    int buffer_cnt = 0;
+    int Num = cnt;
+    while (1) {
+        int ch = Input_Keyboard_Char();
+        if (isdigit(ch)) {
+            if (buffer_cnt < Num) {
+                buffer[buffer_cnt++] = ch;
+                putchar(ch);
+            }
+        }
+        else if (ch == 8) {
+            if (buffer_cnt > 0) {
+                buffer[--buffer_cnt] = 0;
+                printf("%c%c%c", 8, 32, 8);
+            }
+        }
+        else if (ch == 10 || ch == 13) {
+            putchar('\n');
+            break;
+        }
+        else {
+            putchar('\a'); // alarm
+        }
+    }
+    return atoi(buffer);
+}
+
 //输入1到Num的单个数字，并纠正用户进行单项选择时的“输入错误”，防止用户因输入其它字符导致程序退出：
 int Input_1toNum(int Num) {
     char buffer[12] = { 0 };

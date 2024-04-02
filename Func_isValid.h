@@ -32,8 +32,7 @@ void Input_phoneNumber(char* ans);
 void Input_charNumber(char* ans, int cnt);
 //输入仅仅包含数字，传入数字的长度
 int Input_intNumber(int cnt);
-
-
+int Input_intNumberover(int cnt);
 int Input_YN();
 
 int Input_MF();
