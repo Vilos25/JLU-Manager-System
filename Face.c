@@ -737,7 +737,7 @@ void Menu_StdGrade(int ID) {
     int studentID;
     char courseName[20];
     float score;
-    char semester[5];
+    char semester[20];
     int isExempted;
     int isval;
     float newScore;
@@ -1467,11 +1467,12 @@ void Menu_adminStdGrade() {
     int studentID;
     char courseName[20];
     float score;
-    char semester[5];
+    char semester[20];
     int isExempted;
     int isval;
     float newScore;
-    while (1) {
+    int flag = 0;
+    while (flag==0) {
         system("cls");
         system("color F0");
         HideCursor();
@@ -1927,7 +1928,8 @@ void Menu_adminStdGrade() {
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 12:
-            return;
+            flag = 1;
+            break;
         default:
             cursor(26, 34);
             printf("无效的选项，请重新输入。\n");
@@ -1936,6 +1938,7 @@ void Menu_adminStdGrade() {
         }
         printf("\n");
     }
+    return;
 }
 
 //科目列表菜单

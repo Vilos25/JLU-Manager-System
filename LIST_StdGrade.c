@@ -298,7 +298,7 @@ struct Student* search_Student(struct Major** head_Major, int studentID) {
 }
 
 //给学生节点添加成绩，包含通过课程名查重的功能，返回值为1表示添加成功，返回值为0表示添加失败，返回值为-1表示学生不存在，如果重复就标记为重修
-int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[5], int isExempted, int isval) {
+int add_Score(struct Major** head_Major, int studentID, char courseName[20], float score, char semester[20], int isExempted, int isval) {
 	struct Student* tempStudent = search_Student(head_Major, studentID);
 	if (tempStudent == NULL) {
 		return -1;
