@@ -10,9 +10,13 @@
 // 创建头节点
 TeaInfor* createHead_TeaInfor() {
     TeaInfor* head = (TeaInfor*)malloc(sizeof(TeaInfor));
-    head->teacher.id = 0;
-    head->next = NULL;
-    return head;
+    if (head != NULL)
+    {
+        head->teacher.id = 0;
+        head->next = NULL;
+        return head;
+    }
+    else return NULL;
 }
 
 // 添加辅导员信息函数

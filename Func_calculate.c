@@ -11,7 +11,7 @@
 
 
 //计算个人含选修的总学分 
-float calculate_allmyscore(struct Major* head_Major,struct StdGrade* head_SubInfor,int studentID)
+float calculate_allmyscore(struct Major* head_Major,struct SubInfor* head_SubInfor,int studentID)
 {
     //查找指定学号的学生节点
     
@@ -52,7 +52,7 @@ float calculate_allmyscore(struct Major* head_Major,struct StdGrade* head_SubInf
 }
 
 //计算个人计入GPA的总学分 
-float calculate_myscore(struct Major* head_Major, struct StdGrade* head_SubInfor, int studentID)
+float calculate_myscore(struct Major* head_Major, struct SubInfor* head_SubInfor, int studentID)
 {
     //查找指定学号的学生节点
 

@@ -2,10 +2,10 @@
 #define FUNC_CALCILATE_H
 
 //计算个人含选修的总学分 
-float calculate_allmyscore(struct Major* head_Major, struct StdGrade* head_SubInfor, int studentID);
+float calculate_allmyscore(struct Major* head_Major, struct SubInfor* head_SubInfor, int studentID);
 
 //计算个人GPA算入科目的总学分 
-float calculate_myscore(struct Major* head_Major, struct StdGrade* head_SubInfor, int studentID);
+float calculate_myscore(struct Major* head_Major, struct SubInfor* head_SubInfor, int studentID);
 
 
 //计算年级内学生的人数

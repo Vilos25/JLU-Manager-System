@@ -1000,7 +1000,8 @@ void loadFrom_StdGrade(struct Major** head_Major, char* filename) {
 		else if (strcmp(trimmedKey, "各个年级") == 0) {
 			// 创建年级头节点
 			currentGrade = create_Grade();
-			currentMajor->grade = currentGrade;
+			if(currentMajor!=NULL)
+				currentMajor->grade = currentGrade;
 		}
 		else if (strcmp(trimmedKey, "年级") == 0) {
 			// 创建年级节点
@@ -1013,12 +1014,14 @@ void loadFrom_StdGrade(struct Major** head_Major, char* filename) {
 		else if (strcmp(trimmedKey, "学生") == 0) {
 			// 创建学生头节点
 			currentStudent = create_Student();
-			currentGrade->student = currentStudent;
+			if(currentGrade!=NULL)
+				currentGrade->student = currentStudent;
 		}
 		else if (strcmp(trimmedKey, "学号") == 0) {
 			// 创建学生节点
 			int studentID = atoi(trimmedValue);
-			add_Student(head_Major, studentID, currentMajor->majorNum, currentGrade->gradeNum);
+			if(currentMajor!=NULL&& currentGrade!=NULL)
+				add_Student(head_Major, studentID, currentMajor->majorNum, currentGrade->gradeNum);
 			currentStudent = search_Student(head_Major, studentID);
 			currentScore = currentStudent->scores;
 		}
