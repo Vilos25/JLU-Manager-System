@@ -605,6 +605,175 @@ void display_Grade(struct Major* head_Major, int majorNum, int gradeNum) {
 	return;
 }
 
+//显示所有专业
+void display_AllMajor(struct Major* head_Major) {
+	struct Major* tempMajor = head_Major;
+	if (tempMajor == NULL) {
+		printf("无专业。\n");
+		return;
+	}
+	system("cls");
+	while (tempMajor != NULL) {
+		printf("\n\t%s-%s  专业\n", All_Aca[tempMajor->majorNum / 100], ALL_Prof[tempMajor->majorNum / 100][tempMajor->majorNum % 100]);
+		struct Grade* tempGrade = tempMajor->grade;
+		while (tempGrade != NULL) {
+			display_Grade(head_Major, tempMajor->majorNum, tempGrade->gradeNum);
+			tempGrade = tempGrade->next;
+		}
+		tempMajor = tempMajor->next;
+	}
+	return;
+}
+
+//显示链表内的所有专业和所有年级
+void display_AllMajorAndGrade(struct Major* head_Major) {
+	struct Major* tempMajor = head_Major->next;
+	if (tempMajor == NULL) {
+		printf("无专业。\n");
+		return;
+	}
+	system("cls");
+	while (tempMajor != NULL) {
+		printf("\n\n\t专业编号：%d  专业：<%s-%s> \t\t年级：", tempMajor->majorNum, All_Aca[tempMajor->majorNum / 100], ALL_Prof[tempMajor->majorNum / 100][tempMajor->majorNum % 100]);
+		struct Grade* tempGrade = (tempMajor->grade)->next;
+		while (tempGrade != NULL) {
+			printf(" <%d级>", tempGrade->gradeNum);
+			tempGrade = tempGrade->next;
+		}
+		tempMajor = tempMajor->next;
+	}
+	return;
+}
+
+
+
+
+//显示一个学生的专业和年级
+void display_StudentMajorAndGrade(struct Major* head_Major, int studentID) {
+	struct Major* tempMajor = search_MajorByStudentID(head_Major, studentID);
+	if (tempMajor == NULL) {
+		printf("\n\t\t\t找不到指定的学生。\n");
+		return;
+	}
+	struct Grade* tempGrade = search_GradeByStudentID(&tempMajor, studentID);
+	if (tempGrade == NULL) {
+		printf("\n\t\t\t找不到指定的学生。\n");
+		return;
+	}
+	//system("cls");
+	printf("\n\n\t专业编号：<%d>  专业：<%s-%s> \t\t年级：", tempMajor->majorNum, All_Aca[tempMajor->majorNum / 100], ALL_Prof[tempMajor->majorNum / 100][tempMajor->majorNum % 100]);
+	printf("<%d级>\n", tempGrade->gradeNum);
+	return;
+}
+
+//将一个学生节点降级，返回值为1表示降级成功，返回值为0表示降级失败，返回值为-1表示学生不存在
+int demote_Student(struct Major** head_Major, int studentID, int targetGradeNum) {
+    struct Major* tempMajor = *head_Major;
+    struct Grade* tempGrade;
+    struct Student* tempStudent;
+    while (tempMajor != NULL) {
+        tempGrade = tempMajor->grade;
+        while (tempGrade != NULL) {
+            tempStudent = tempGrade->student;
+            while (tempStudent != NULL) {
+                if (tempStudent->studentID == studentID) {
+                    // 保存当前年级节点和学生节点的信息
+                    struct Grade* currentGrade = tempGrade;
+                    struct Student* currentStudent = tempStudent;
+                    // 在目标年级中查找学生节点
+                    struct Grade* targetGrade = search_Grade(head_Major, targetGradeNum);
+                    if (targetGrade == NULL) {
+                        printf("目标年级不存在，降级失败。\n");
+                        return 0;
+                    }
+                    // 在目标年级中查找学生节点是否已存在
+                    struct Student* targetStudent = targetGrade->student;
+                    while (targetStudent != NULL) {
+                        if (targetStudent->studentID == studentID) {
+                            printf("学生已存在于目标年级，降级失败。\n");
+                            return 0;
+                        }
+                        targetStudent = targetStudent->next;
+                    }
+                    // 从当前年级中删除学生节点
+                    if (currentGrade->student == currentStudent) {
+                        currentGrade->student = currentStudent->next;
+                    } else {
+                        struct Student* prevStudent = currentGrade->student;
+                        while (prevStudent->next != currentStudent) {
+                            prevStudent = prevStudent->next;
+                        }
+                        prevStudent->next = currentStudent->next;
+                    }
+                    // 将学生节点添加到目标年级中
+                    currentStudent->next = targetGrade->student;
+                    targetGrade->student = currentStudent;
+                    printf("学生降级成功。\n");
+                    return 1;
+                }
+                tempStudent = tempStudent->next;
+            }
+            tempGrade = tempGrade->next;
+        }
+        tempMajor = tempMajor->next;
+    }
+    printf("学生不存在，降级失败。\n");
+    return -1;
+}
+
+//将一个学生节点转到不同专业的同年级，返回值为1表示转专业成功，返回值为0表示转专业失败，返回值为-1表示学生不存在
+int transfer_Student(struct Major** head_Major, int studentID, int targetMajorNum, int targetGradeNum) {
+    struct Major* sourceMajor = search_MajorByStudentID(*head_Major, studentID);
+    if (sourceMajor == NULL) {
+        printf("\n\t\t\t\t学生不存在，学籍变动失败。\n");
+        return -1;
+    }
+    struct Major* targetMajor = search_Major(*head_Major, targetMajorNum);
+    if (targetMajor == NULL) {
+        printf("\n\t\t\t\t目标专业不存在，学籍变动失败。\n");
+        return 0;
+    }
+    struct Grade* sourceGrade = search_GradeByStudentID(&sourceMajor, studentID);
+    if (sourceGrade == NULL) {
+        printf("\n\t\t\t\t学生所在年级不存在，学籍变动失败。\n");
+        return 0;
+    }
+    struct Grade* targetGrade = search_Grade(&targetMajor, targetGradeNum);
+    if (targetGrade == NULL) {
+        printf("\n\t\t\t\t目标年级不存在，学籍变动失败。\n");
+        return 0;
+    }
+    struct Student* sourceStudent = search_Student(&sourceMajor, studentID);
+    if (sourceStudent == NULL) {
+        printf("\n\t\t\t\t学生不存在，学籍变动失败。\n");
+        return -1;
+    }
+    struct Student* targetStudent = create_Student();
+    if (targetStudent == NULL) {
+        printf("\n\t\t\t\t内存分配失败，学籍变动失败。\n");
+        return 0;
+    }
+    targetStudent->studentID = sourceStudent->studentID;
+    targetStudent->GPA = sourceStudent->GPA;
+    targetStudent->add_GPA = sourceStudent->add_GPA;
+    targetStudent->rank = sourceStudent->rank;
+    strcpy(targetStudent->rankTime, sourceStudent->rankTime);
+    targetStudent->scores = sourceStudent->scores;
+    targetStudent->next = targetGrade->student;
+    targetGrade->student = targetStudent;
+    if (sourceGrade->student == sourceStudent) {
+        sourceGrade->student = sourceStudent->next;
+    } else {
+        struct Student* prevStudent = sourceGrade->student;
+        while (prevStudent->next != sourceStudent) {
+            prevStudent = prevStudent->next;
+        }
+        prevStudent->next = sourceStudent->next;
+    }
+    printf("\n\t\t\t\t学籍变动成功。\n");
+    return 1;
+}
+
 
 //删除指定年级，返回值为1表示删除成功，返回值为0表示删除失败
 int delete_Grade(struct Major** head_Major, int majorNum, int gradeNum) {
@@ -882,7 +1051,7 @@ void saveTo_StdGrade(struct Major** head_Major, char* filename) {
 	fprintf(file, "}\n");
 
 	fclose(file);
-	printf("数据保存成功。\n");
+	//printf("数据保存成功。\n");
 }
 
 /*

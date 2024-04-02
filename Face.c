@@ -1185,10 +1185,12 @@ void Menu_Admin()
         cursor(26, 14);
         printf("4. 学生成绩库管理");
         cursor(26, 16);
-        printf("5. 退出");
+        printf("5. 学生学籍变动管理");
         cursor(26, 18);
+        printf("6. 退出");
+        cursor(26, 20);
         printf("请输入您的选择：");
-        choice = Input_1toNum(5);
+        choice = Input_1toNum(6);
         switch (choice) {
         case 1:
             Menu_adminTeacher();
@@ -1203,7 +1205,11 @@ void Menu_Admin()
             Menu_adminStdGrade();
             break;
         case 5:
-            return;
+            Menu_StudentStatusChange();
+			break;
+        case 6:
+			return;
+            
         default:
             cursor(26, 20);
             printf("无效的选项，请重新输入。\n");
@@ -1337,6 +1343,8 @@ void Menu_adminTeacher()
         printf("\n");
     }
 }
+
+
 
 //学生信息管理菜单
 void Menu_adminStdInfor()
@@ -1476,37 +1484,45 @@ void Menu_adminStdGrade() {
         system("cls");
         system("color F0");
         HideCursor();
-        cursor(26, 3);
-        printf("已进入成绩库管理菜单！");
-        cursor(26, 5);
-        printf("1. 添加专业");
-        cursor(26, 7);
-        printf("2. 删除专业");
-        cursor(26, 9);
-        printf("3. 添加年级");
-        cursor(26, 11);
-        printf("4. 删除年级");
-        cursor(26, 13);
-        printf("5. 添加学生");
-        cursor(26, 15);
-        printf("6. 添加学生成绩");
-        cursor(26, 17);
-        printf("7. 修改学生成绩");
-        cursor(26, 19);
-        printf("8. 删除学生成绩");
-        cursor(26, 21);
-        printf("9. 删除学生");
-        cursor(26, 23);
-        printf("10. 显示单个学生的所有成绩");
-        cursor(26, 25);
-        printf("11. 显示指定专业、年级的所有学生成绩");
-        cursor(26, 27);
-        printf("12. 退出");
-        cursor(26, 29);
-        printf("请输入您的选择：");
+        //cursor(26, 3);
+        printf("\n\t\t\t已进入成绩库管理菜单！\n");
+        //cursor(26, 5);
+        printf("\n\n\t\t\t1. 显示当前库内所有专业和年级");
+        printf("\n\n\t\t\t2. 添加专业");
+        //cursor(26, 7);
+        printf("\n\n\t\t\t3. 删除专业");
+        //cursor(26, 9);
+        printf("\n\n\t\t\t4. 添加年级");
+        //cursor(26, 11);
+        printf("\n\n\t\t\t5. 删除年级");
+        //cursor(26, 13);
+        printf("\n\n\t\t\t6. 创建学生成绩空间");
+        //cursor(26, 15);
+        printf("\n\n\t\t\t7. 添加学生成绩");
+        //cursor(26, 17);
+        printf("\n\n\t\t\t8. 修改学生成绩");
+        //cursor(26, 19);
+        printf("\n\n\t\t\t9. 删除学生成绩");
+        //cursor(26, 21);
+        printf("\n\n\t\t\t10. 删除学生成绩空间");
+        //cursor(26, 23);
+        printf("\n\n\t\t\t11. 显示单个学生的所有成绩");
+        //cursor(26, 25);
+        printf("\n\n\t\t\t12. 显示指定专业、年级的所有学生成绩");
+        //cursor(26, 27);
+        printf("\n\n\t\t\t13. 退出");
+        //cursor(26, 29);
+        printf("\n\n\n\t\t\t请输入您的选择：");
         choice = Input_intNumberover(2);
         switch (choice) {
-        case 1:
+		case 1:
+			system("cls");
+			system("color F0");
+			HideCursor();
+            display_AllMajorAndGrade(head_Major);
+			system("pause");
+			break;
+        case 2:
             do {
                 system("cls");
                 system("color F0");
@@ -1532,7 +1548,7 @@ void Menu_adminStdGrade() {
                 Sleep(1000);
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 2:
+        case 3:
             do {
                 system("cls");
                 system("color F0");
@@ -1558,7 +1574,7 @@ void Menu_adminStdGrade() {
                 Sleep(1000);
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 3:
+        case 4:
             do {
                 system("cls");
                 system("color F0");
@@ -1595,7 +1611,7 @@ void Menu_adminStdGrade() {
                 Sleep(1000);
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 4:
+        case 5:
             do {
                 system("cls");
                 system("color F0");
@@ -1632,7 +1648,7 @@ void Menu_adminStdGrade() {
                 Sleep(1000);
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 5:
+        case 6:
             do {
                 system("cls");
                 system("color F0");
@@ -1679,7 +1695,7 @@ void Menu_adminStdGrade() {
                 Sleep(1000);
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 6:
+        case 7:
             do {
                 system("cls");
                 system("color F0");
@@ -1735,7 +1751,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 7:
+        case 8:
             do {
                 system("cls");
                 system("color F0");
@@ -1788,7 +1804,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 8:
+        case 9:
             do {
                 system("cls");
                 system("color F0");
@@ -1835,7 +1851,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 9:
+        case 10:
             do {
                 system("cls");
                 system("color F0");
@@ -1854,7 +1870,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 10:
+        case 11:
             do {
                 system("cls");
                 system("color F0");
@@ -1908,7 +1924,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 11:
+        case 12:
             do {
                 system("cls");
                 system("color F0");
@@ -1938,7 +1954,7 @@ void Menu_adminStdGrade() {
                 system("pause");
             } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 12:
+        case 13:
             flag = 1;
             break;
         default:
@@ -2046,3 +2062,113 @@ void Menu_SubInfor() {
         printf("\n");
     }
 }
+
+
+//学籍变动菜单，包括显示链表内所有专业和年级、，学籍查询，学籍变动（包含转专业和降级）
+void Menu_StudentStatusChange()
+{
+    int choice;
+    while (1) {
+        system("cls");
+        system("color F0");
+        HideCursor();
+        cursor(26, 6);
+        printf("已进入学籍变动菜单！\n\n");
+        cursor(26, 8);
+        printf("1. 显示当前库内所有专业和年级");
+        cursor(26, 10);
+        printf("2. 学籍查询");
+        cursor(26, 12);
+        printf("3. 学籍变动");
+        cursor(26, 14);
+        printf("4. 退出");
+        cursor(26, 16);
+        printf("请输入您的选择：");
+        choice = Input_1toNum(4);
+        switch (choice) {
+        case 1:
+            display_AllMajorAndGrade(head_Major);
+            printf("\n\n\t\t");
+            system("pause");
+            break;
+        case 2:
+            do {
+                system("cls");
+                system("color F0");
+                HideCursor();
+                cursor(26, 6);
+                printf("请输入学号：");
+                int studentID = Input_Raw_Integer(8);
+                // 查询学生学号和姓名
+                print_StdInfor(head_StdInfor, head_Major, studentID);
+                //显示一个学生的专业和年级
+                printf("\n\n\t\t\t学籍信息如下：");
+                display_StudentMajorAndGrade(head_Major, studentID);
+                //system("pause");
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            break;
+        case 3:
+            do {
+                system("cls");
+                system("color F0");
+                HideCursor();
+                cursor(26, 6);
+                printf("请输入学号：");
+                int studentID = Input_Raw_Integer(8);
+                if (search_Student(&head_Major, studentID) == NULL)
+                {
+                    cursor(26, 8);
+                    printf("该学号不存在，请重新输入。\n");
+                    Sleep(1000);
+                    continue;
+                }
+                cursor(26, 8);
+                printf("请输入专业编号：");
+                int majorNum = Input_Raw_Integer(4);
+                if (search_Major(head_Major, majorNum) == NULL)
+                {
+                    cursor(26, 10);
+                    printf("该专业不存在，请重新输入。\n");
+                    Sleep(1000);
+                    continue;
+                }
+                cursor(26, 10);
+                printf("请输入年级：");
+                int gradeNum = Input_Raw_Integer(2);
+                struct Major* p = search_Major(head_Major, majorNum);
+                if (search_Grade(&p, gradeNum) == NULL)
+                {
+                    cursor(26, 12);
+                    printf("该年级不存在，请重新输入。\n");
+                    Sleep(1000);
+                    continue;
+                }
+                cursor(26, 12);
+                if (printf("是否确认变动？（Y/N）："), toupper(Input_YN()) == 'N') {
+                    continue;
+                }
+                if (transfer_Student(&head_Major, studentID, majorNum, gradeNum) == 1) {
+                    cursor(26, 14);
+                    //printf("变动成功。\n");
+                }
+                else {
+                    cursor(26, 14);
+                    //printf("变动失败。\n");
+                    Sleep(1000);
+                }
+                saveTo_StdGrade(&head_Major, FILENAME_GRA);
+                
+            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            break;
+        case 4:
+            return;
+        default:
+            cursor(26, 16);
+            printf("无效的选项，请重新输入。\n");
+            Sleep(1000);
+            break;
+        }
+        printf("\n");
+    }
+}
+

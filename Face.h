@@ -14,6 +14,8 @@ void Menu_Admin();
 void Menu_adminTeacher();
 void Menu_adminStdGrade();
 void Menu_adminStdInfor();
+//学籍变动菜单，包括显示链表内所有专业和年级,学籍查询，学籍变动（包含转专业和降级）
+void Menu_StudentStatusChange();
 
 void First_Load();
 void End_Save();
