@@ -642,7 +642,6 @@ bool isValid_SubNum(const char* subNum) {
             return false;
         }
     }
-
     return true;
 }
 

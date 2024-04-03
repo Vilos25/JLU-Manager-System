@@ -973,11 +973,11 @@ int Readfile(AccountNode* Head, AccountNode* Diferhead, AccountNode* Accrr[], in
 {
 	int i = 0;//i是计数器，记录成功从文件中录入的账号数。
 	FILE* fp;
-	if ((fp = fopen("D:\\VS（正式的）\\Login & Resgister 2.0\\List_New_Account.txt", "r+")) == NULL)
+	if ((fp = fopen("List_New_Account.txt", "r+")) == NULL)
 	{
 		cursor(26, xy++);
 		printf("文件打开失败！！!\n");
-		exit(0);
+		return 0;
 	}
 	for (i = 0; (!feof(fp)); i++)
 	{
