@@ -1,7 +1,5 @@
-//目前只有论文、比赛部分有模拟数据。
 // LIST_BonusDev_Paper.txt  存放系统已有数据，并作为保存文件。
 // LIST_newBonusDev_Paper.txt   存放预备用来批量添加的数据。
-// comp.txt  存放有用的数据草稿
 // 其他两种素质类项目的.txt文件作用同理
 #define _CRT_SECURE_NO_WARNINGS
 #include <string.h>
@@ -30,7 +28,7 @@ BonusNote* Start_Logging_bonusFile(void)
 	CompNote* Comparr[50] = { 0 };
 	PaperNote* Paperarr[50] = { 0 };
 	ProjNote* Projarr[50] = { 0 };
-	
+
 	BonusNote* Head = (BonusNote*)malloc(sizeof(BonusNote));//整个学生的链表的头结点不保存任何数据。
 	memset(Head->Accountnum, 0, 20);
 	memset(Head->Name, 0, 30);
@@ -87,7 +85,7 @@ BonusNote* Start_Logging_bonusFile(void)
 //增加学生节点，传入int类型的学号，char类型的姓名，返回一个新的学生节点
 void Add_BonusNote_Node(BonusNote* Head, int ID, char Name[])
 {
-	char Acc[20]={0};
+	char Acc[20] = { 0 };
 	Int_To_Str(ID, Acc);
 	BonusNote* newnode = (BonusNote*)malloc(sizeof(BonusNote));
 	memset(newnode->Accountnum, 0, 20);
@@ -128,7 +126,7 @@ void Add_Mutiple_PaperNote(BonusNote* Head)// 3 批量添加 多人的论文信息
 	Logging_PaperNote(Head, newPaperarr, 0);
 }
 void Add_Mutiple_ProjNote(BonusNote* Head)// 4 批量添加 多人的国家级优秀结题项目信息
-{ 
+{
 	ProjNote* newProjarr[50] = { 0 };
 	Logging_ProjNote(Head, newProjarr, 0);
 }
@@ -145,11 +143,12 @@ BonusNote* Add_Single_CompNote(BonusNote* Head, char Acc[], char Tea_Stu)
 	CompNote* newnode = (CompNote*)malloc(sizeof(CompNote));//创建新节点。
 	newnode->Next = NULL;
 
+	system("cls");
 	strcpy(newnode->Accountnum, pcurrent->Accountnum);
 	printf("\n输入竞赛项目名称:\n");
 	Comp_Name_Input_Right(newnode->CompName);//必须可选
 	printf("\n请输入获奖人和顺序，人名之间请用顿号隔开：\n");//(二重数组)
-	scanf("%s",newnode->Winers);//通过指针改变内容。
+	scanf("%s", newnode->Winers);//通过指针改变内容。
 	printf("\n请输入竞赛类型：\n");
 	Input_ABC(&(newnode->ABC));
 	printf("\n请输入获奖等级：\n");
@@ -203,13 +202,12 @@ BonusNote* Add_Single_CompNote(BonusNote* Head, char Acc[], char Tea_Stu)
 		printf("\n申请成功！请耐心等待教师审核通过。\n\n");
 	}
 
-	Display_All_CompNote(Head);//将删
 	return Head;
 }
 /**************************************************************************************************************************/
 
 // 6 录入单个 论文项目 给某人
-BonusNote* Add_Single_PaperNote(BonusNote* Head, char Acc[],char Tea_Stu)
+BonusNote* Add_Single_PaperNote(BonusNote* Head, char Acc[], char Tea_Stu)
 {
 	BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
 	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
@@ -218,6 +216,7 @@ BonusNote* Add_Single_PaperNote(BonusNote* Head, char Acc[],char Tea_Stu)
 	PaperNote* newnode = (PaperNote*)malloc(sizeof(PaperNote));//创建新节点。
 	newnode->Next = NULL;
 
+	system("cls");
 	strcpy(newnode->Accountnum, pcurrent->Accountnum);//ok
 	printf("请输入期刊名称/会议名称：\n");
 	Journal_Input_Right(newnode->Journal_Conference);//必须可选
@@ -283,8 +282,6 @@ BonusNote* Add_Single_PaperNote(BonusNote* Head, char Acc[],char Tea_Stu)
 		printf("\n申请成功！请耐心等待教师审核通过。\n\n");
 	}
 
-	Display_All_PaperNote(Head);//将删
-
 	return Head;
 }
 /**************************************************************************************************************************/
@@ -301,14 +298,15 @@ BonusNote* Add_Single_ProjNote(BonusNote* Head, char Acc[], char Tea_Stu)
 
 	strcpy(newnode->Accountnum, pcurrent->Accountnum);//ok
 
+	system("cls");
 	printf("\n输入项目名称：");
 	//getchar();
-	scanf("%s",newnode->ProjName);
+	scanf("%s", newnode->ProjName);
 	printf("所有成员和顺序：（人名之间请用顿号隔开）\n");//(二重数组)
-	
-	scanf("%s",newnode->Members);//通过指针改变内容。
+
+	scanf("%s", newnode->Members);//通过指针改变内容。
 	printf("指导教师姓名：\n");
-	scanf("%s",newnode->Advisor);
+	scanf("%s", newnode->Advisor);
 	printf("立项时间：\n");
 	Time_Input_Right(newnode->Start_time);//ok
 	printf("结项时间：\n");
@@ -347,8 +345,6 @@ BonusNote* Add_Single_ProjNote(BonusNote* Head, char Acc[], char Tea_Stu)
 	else {
 		printf("\n申请成功！请耐心等待教师审核通过。\n\n");
 	}
-
-	Display_All_PaperNote(Head);//将删
 
 	return Head;
 }
@@ -456,7 +452,7 @@ void Logging_PaperNote(BonusNote* Head, PaperNote* Paperarr[], int Atri)
 		Paperarr[i] = (PaperNote*)malloc(sizeof(PaperNote));
 		Paperarr[i]->Next = NULL;
 		memset(Paperarr[i]->Accountnum, 0, 20);
-		memset(Paperarr[i]->PaperName, 0,50);
+		memset(Paperarr[i]->PaperName, 0, 50);
 		memset(Paperarr[i]->Writers, 0, 150);
 		memset(Paperarr[i]->Journal_Conference, 0, 150);
 		memset(Paperarr[i]->Time, 0, 30);
@@ -531,8 +527,8 @@ void Logging_ProjNote(BonusNote* Head, ProjNote* Projarr[], int Atri)
 		memset(Projarr[i]->Start_time, 0, 30);
 		memset(Projarr[i]->Finish_time, 0, 30);
 		memset(Projarr[i]->ProjNum, 0, 30);
-		
-		sscanf(line, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%f\t", Projarr[i]->Accountnum, Projarr[i]->ProjName, Projarr[i]->Members, Projarr[i]->Advisor, Projarr[i]->Start_time, Projarr[i]->Finish_time, Projarr[i]->ProjNum, &Projarr[i]->Role ,&Projarr[i]->Attribute, &Projarr[i]->Ponit);
+
+		sscanf(line, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%f\t", Projarr[i]->Accountnum, Projarr[i]->ProjName, Projarr[i]->Members, Projarr[i]->Advisor, Projarr[i]->Start_time, Projarr[i]->Finish_time, Projarr[i]->ProjNum, &Projarr[i]->Role, &Projarr[i]->Attribute, &Projarr[i]->Ponit);
 		//插入链表中
 		BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
 		while (!(strcmp(pcurrent->Accountnum, Projarr[i]->Accountnum) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
@@ -549,7 +545,7 @@ void Logging_ProjNote(BonusNote* Head, ProjNote* Projarr[], int Atri)
 			}
 			pcurrent2->Next = Projarr[i];
 		}
-		
+
 		if (Projarr[i]->Attribute == 1) {//如果审核属性为“批准”
 			pcurrent->Bonusponit = Calcul_Single_Bonusponit(Head, pcurrent->Accountnum);//就重算该学生加分绩点
 		}
@@ -620,70 +616,13 @@ void Save_ProjList_ToFile(BonusNote* Head)
 		ProjNote* pcurrent2 = current->Projhead;
 
 		while (pcurrent2 != NULL) {
-			fprintf(file, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%.2f\n", pcurrent2->Accountnum, pcurrent2->ProjName, pcurrent2->Members, pcurrent2->Advisor, pcurrent2->Start_time, pcurrent2->Finish_time, pcurrent2->ProjNum, pcurrent2->Role ,pcurrent2->Attribute, pcurrent2->Ponit);
+			fprintf(file, "%s\t%s\t%s\t%s\t%s\t%s\t%s\t%d\t%d\t%.2f\n", pcurrent2->Accountnum, pcurrent2->ProjName, pcurrent2->Members, pcurrent2->Advisor, pcurrent2->Start_time, pcurrent2->Finish_time, pcurrent2->ProjNum, pcurrent2->Role, pcurrent2->Attribute, pcurrent2->Ponit);
 			pcurrent2 = pcurrent2->Next;  // 遍历至下一个节点
 		}
 		current = current->Next;
 	}
 	fclose(file);  // 关闭文件
 }
-/**************************************************************************************************************************/
-
-/**************************************************************************************************************************/
-
-// 14 修改 单人的比赛项目 加分状态
-//BonusNote* Modify_CompAttr(BonusNote* Head, char Acc[], char Compname[])
-//{
-//	BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
-//	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
-//		pcurrent = pcurrent->Next;
-//	}
-//	CompNote* pcurrent2 = pcurrent->Comphead;
-//	while (!(strcmp(pcurrent2->CompName, Compname) == 0)) {//找到对应竞赛名称。（前面应该采取措施，使形参的竞赛名称Compname必然存在于链表中）
-//		pcurrent2 = pcurrent2->Next;
-//	}
-//	printf("请选择该项目是否审核通过：\n");
-//	printf("1：批准\n");
-//	printf("2：审核中\n");
-//	printf("3：否决\n");
-//	pcurrent2->Attribute = Input_1toNum(3);
-//	pcurrent->Bonusponit = Calcul_Single_Bonusponit(Head, Acc);//重算该学生加分绩点
-//	return Head;
-//}
-/**************************************************************************************************************************/
-
-// 15 修改 单人的论文项目 加分状态
-//BonusNote* Modify_PaperAttr(BonusNote* Head, char Acc[], char Papername[])
-//{
-//	BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
-//	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
-//		pcurrent = pcurrent->Next;
-//	}
-//	PaperNote* pcurrent2 = pcurrent->Paperhead;
-//	while (!(strcmp(pcurrent2->PaperName, Papername) == 0)) {//找到对应论文名称。（前面应该采取措施，使形参的论文名称Papername必然存在于链表中）
-//		pcurrent2 = pcurrent2->Next;
-//	}
-//	pcurrent2->Attribute = Input_1toNum(3);
-//	pcurrent->Bonusponit = Calcul_Single_Bonusponit(Head, Acc);//重算该学生加分绩点
-//	return Head;
-//}
-/**************************************************************************************************************************/
-
-// 16 修改 单人的结题项目 加分状态
-//BonusNote* Modify_ProjAttr(BonusNote* Head, char Acc[], char Projname[])
-//{
-//	BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
-//	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
-//		pcurrent = pcurrent->Next;
-//	}
-//	ProjNote* pcurrent2 = pcurrent->Projhead;
-//	while (!(strcmp(pcurrent2->ProjName, Projname) == 0)) {//找到对应项目名称。（前面应该采取措施，使形参的项目名称Projname必然存在于链表中）
-//		pcurrent2 = pcurrent2->Next;
-//	}
-//	pcurrent2->Attribute = Input_1toNum(3);
-//	pcurrent->Bonusponit = Calcul_Single_Bonusponit(Head, Acc);//重算该学生加分绩点
-//	return Head;
-//}
 /**************************************************************************************************************************/
 
 /**************************************************************************************************************************/
@@ -696,21 +635,42 @@ float Calcul_Single_Bonusponit(BonusNote* Head, char Acc[])
 	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
 		pcurrent = pcurrent->Next;
 	}
-		CompNote* pcurrent2 = pcurrent->Comphead;
-		PaperNote* pcurrent3 = pcurrent->Paperhead;
-		ProjNote* pcurrent4 = pcurrent->Projhead;
-		while (pcurrent2 != NULL) {
-			if (pcurrent2->Attribute == 1) { Bonus_sum += pcurrent2->Ponit; }
-			pcurrent2 = pcurrent2->Next;
+	CompNote* pcurrent2 = pcurrent->Comphead;
+	PaperNote* pcurrent3 = pcurrent->Paperhead;
+	ProjNote* pcurrent4 = pcurrent->Projhead;
+	int a = 0, b = 0, c = 0;
+	float apoint = 0.00, bpoint = 0.00, cpoint = 0.00;
+	while (pcurrent2 != NULL) {
+		if (pcurrent2->Attribute == 1) { //比赛类型，同类取最高
+			if (pcurrent2->ABC == 'A') {
+				if (pcurrent2->Ponit > apoint) {
+					Bonus_sum = Bonus_sum - apoint + pcurrent2->Ponit;
+					apoint = pcurrent2->Ponit;
+				}
+			}
+			if (pcurrent2->ABC == 'B') {
+				if (pcurrent2->Ponit > bpoint) {
+					Bonus_sum = Bonus_sum - bpoint + pcurrent2->Ponit;
+					bpoint = pcurrent2->Ponit;
+				}
+			}
+			if (pcurrent2->ABC == 'C') {
+				if (pcurrent2->Ponit > cpoint) {
+					Bonus_sum = Bonus_sum - cpoint + pcurrent2->Ponit;
+					cpoint = pcurrent2->Ponit;
+				}
+			}
 		}
-		while (pcurrent3 != NULL) {
-			if (pcurrent3->Attribute == 1) { Bonus_sum += pcurrent3->Ponit; }
-			pcurrent3 = pcurrent3->Next;
-		}
-		while (pcurrent4 != NULL) {
-			if (pcurrent4->Attribute == 1) { Bonus_sum += pcurrent4->Ponit; }
-			pcurrent4 = pcurrent4->Next;
-		}
+		pcurrent2 = pcurrent2->Next;
+	}
+	while (pcurrent3 != NULL) {
+		if (pcurrent3->Attribute == 1) { Bonus_sum += pcurrent3->Ponit; }
+		pcurrent3 = pcurrent3->Next;
+	}
+	while (pcurrent4 != NULL) {
+		if (pcurrent4->Attribute == 1) { Bonus_sum += pcurrent4->Ponit; }
+		pcurrent4 = pcurrent4->Next;
+	}
 	if (Bonus_sum >= 0.4) { return 0.40; }
 	else { return Bonus_sum; }
 }
@@ -735,13 +695,13 @@ BonusNote* Find_BonusNote_ByAcc(BonusNote* Head, int ID)
 void Display_Single_BonusNote(BonusNote* Head, int ID)
 {
 	system("cls");
-	char Acc[20]={ 0 };
+	char Acc[20] = { 0 };
 	Int_To_Str(ID, Acc);// 36 数字ID转成字符串账号
 	BonusNote* pcurrent = Head->Next;// Head->next是第一个BonusNote数据节点 
-	while (!(strcmp(pcurrent->Accountnum, Acc) == 0)&& pcurrent->Next!=NULL) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
+	while (!(strcmp(pcurrent->Accountnum, Acc) == 0) && pcurrent->Next != NULL) {//找到对应账号。（前面应该采取措施，使形参的账号Acc必然存在于链表中）
 		pcurrent = pcurrent->Next;
 	}
-	if(pcurrent->Next==NULL)
+	if (pcurrent->Next == NULL)
 	{
 		printf("未找到该学生的素质类加分信息！\n");
 		Sleep(1000);
@@ -757,7 +717,7 @@ void Display_Single_BonusNote(BonusNote* Head, int ID)
 	Print_Single_Proj(pcurrent->Projhead);
 	printf("\n");
 	//printf("--------------------------------------------------------------------------------------------------------------------------------------------------------------------\n");
-	printf("\n\t\t该学生总的有效加分绩点：%.2f\n", pcurrent->Bonusponit );
+	printf("\n\t\t该学生总的有效加分绩点：%.2f\n", pcurrent->Bonusponit);
 	printf("\n");
 	system("pause");
 }
@@ -768,8 +728,8 @@ void Display_Single_BonusNote(BonusNote* Head, int ID)
 // 19 打印 一个人 所有的比赛项目 (从人的角度打印）
 void Print_Single_Comp(CompNote* Head)
 {
-	if(Head==NULL)
-		{
+	if (Head == NULL)
+	{
 		printf("\n\t\t<竞赛类> : 无\n");
 		return;
 	}
@@ -791,9 +751,9 @@ void Print_Single_Comp(CompNote* Head)
 			printf("\t\t\t主办单位: \n%s\n", pcurrent->Sponsor);
 			printf("\t\t\t获奖时间: \t%s\n", pcurrent->Time);
 			//printf("\t\t\t审核状态: \t%d\n", pcurrent->Attribute);
-			if (pcurrent->Attribute == 1) {printf("\t\t\t审核状态: \t批准\n");}
-			else if(pcurrent->Attribute==2){printf("\t\t\t审核状态: \t审核中\n");}
-			else{printf("\t\t\t审核状态: \t否决\n");}
+			if (pcurrent->Attribute == 1) { printf("\t\t\t审核状态: \t批准\n"); }
+			else if (pcurrent->Attribute == 2) { printf("\t\t\t审核状态: \t审核中\n"); }
+			else { printf("\t\t\t审核状态: \t否决\n"); }
 			printf("\t\t\t应加绩点: \t%.2f\n", pcurrent->Ponit);
 			printf("\n");
 
@@ -808,8 +768,8 @@ void Print_Single_Comp(CompNote* Head)
 // 20 打印 一个人 所有的论文项目
 void Print_Single_Paper(PaperNote* Head)
 {
-	if(Head==NULL)
-		{
+	if (Head == NULL)
+	{
 		printf("\n\t\t<论文类> ：无\n");
 		return;
 	}
@@ -832,9 +792,9 @@ void Print_Single_Paper(PaperNote* Head)
 			printf("\t\t\t论文号: \t%s\n", pcurrent->Volume_Page[1]);
 			printf("\t\t\t页码范围: \t%s\n", pcurrent->Volume_Page[2]);
 			//printf("\t\t\t审核状态: \t%d\n", pcurrent->Attribute);
-			if (pcurrent->Attribute == 1) {printf("\t\t\t审核状态: \t批准\n");}
-			else if(pcurrent->Attribute==2){printf("\t\t\t审核状态: \t审核中\n");}
-			else{printf("\t\t\t审核状态: \t否决\n");}
+			if (pcurrent->Attribute == 1) { printf("\t\t\t审核状态: \t批准\n"); }
+			else if (pcurrent->Attribute == 2) { printf("\t\t\t审核状态: \t审核中\n"); }
+			else { printf("\t\t\t审核状态: \t否决\n"); }
 			printf("\t\t\t应加绩点: \t%.2f\n", pcurrent->Ponit);
 			printf("\n");
 
@@ -849,8 +809,8 @@ void Print_Single_Paper(PaperNote* Head)
 // 21 打印 一个人 所有的结题项目
 void Print_Single_Proj(ProjNote* Head)
 {
-	if(Head==NULL)
-		{
+	if (Head == NULL)
+	{
 		printf("\n\t\t<项目类> : 无\n");
 		return;
 	}
@@ -872,13 +832,13 @@ void Print_Single_Proj(ProjNote* Head)
 			printf("\t\t\t结项时间: \t%s\n", pcurrent->Finish_time);
 			printf("\t\t\t项目编号: \t%s\n", pcurrent->ProjNum);
 			//printf("\t\t\t责任性质: \t%d\n", pcurrent->Role);
-			if (pcurrent->Role == 1) {printf("\t\t\t责任性质: \t负责人\n");}
-			else if(pcurrent->Role==2){printf("\t\t\t责任性质: \t成员\n");}
-			else{printf("\t\t\t责任性质: \t其他\n");}
+			if (pcurrent->Role == 1) { printf("\t\t\t责任性质: \t负责人\n"); }
+			else if (pcurrent->Role == 2) { printf("\t\t\t责任性质: \t成员\n"); }
+			else { printf("\t\t\t责任性质: \t其他\n"); }
 			//printf("\t\t\t审核状态: \t%d\n", pcurrent->Attribute);
-			if (pcurrent->Attribute == 1) {printf("\t\t\t审核状态: \t批准\n");}
-			else if(pcurrent->Attribute==2){printf("\t\t\t审核状态: \t审核中\n");}
-			else{printf("\t\t\t审核状态: \t否决\n");}
+			if (pcurrent->Attribute == 1) { printf("\t\t\t审核状态: \t批准\n"); }
+			else if (pcurrent->Attribute == 2) { printf("\t\t\t审核状态: \t审核中\n"); }
+			else { printf("\t\t\t审核状态: \t否决\n"); }
 			printf("\t\t\t应加绩点: \t%.2f\n", pcurrent->Ponit);
 			printf("\n");
 			//指针移动到下一个元素的首地址
@@ -953,10 +913,13 @@ void Display_All_BonusInform(BonusNote* Head)
 {
 	printf("竞赛类：\n\n");
 	Display_All_CompNote(Head);
+	system("pause");
 	printf("论文类：\n\n");
 	Display_All_PaperNote(Head);
+	system("pause");
 	printf("项目类：\n\n");
 	Display_All_ProjNote(Head);
+	system("pause");
 }
 /**************************************************************************************************************************/
 
@@ -991,7 +954,6 @@ void Comp_Name_Input_Right(char* Compname) {
 	while (1) {
 		char input[100] = { 0 };
 		scanf("%s", input);
-
 		for (int i = 0; i < 20; i++) {
 			if (strcmp(input, Pattern[i]) == 0) {
 				strcpy(Compname, Pattern[i]);
@@ -1002,47 +964,6 @@ void Comp_Name_Input_Right(char* Compname) {
 		printf("没有这个比赛，请重新输入。\n");
 	}
 }
-/**************************************************************************************************************************/
-
-//// 27 输入+检查 多人名称
-//void Multiple_People_Input_Right(char input[150]) {
-//	bool isValid = false;
-//
-//	while (!isValid) {
-//		memset(input, 0, 150);
-//		//getchar();
-//		scanf("%s",input);
-//		
-//		// 检查名字个数是否在要求范围内且名字是否是中文
-//		int countNames = 1;
-//		bool allChinese = true;
-//		for (int i = 0; i < strlen(input); i++) {
-//			if (input[i] == '、') {
-//				countNames++;
-//				continue;
-//			}
-//			wchar_t wc;
-//			mbtowc(&wc, &input[i], sizeof(wchar_t));
-//			if (wc >= 0x4e00 && wc <= 0x9fff) {
-//				continue;
-//			}
-//			else {
-//				allChinese = false;
-//				break;
-//			}
-//		}
-//
-//		if ( countNames <= 5 && allChinese) {
-//
-//			isValid = true;
-//		}
-//		else {
-//			printf("输入有误，请重新输入。\n");
-//		}
-//	}
-//}
-
-
 /**************************************************************************************************************************/
 
 // 28 输入+检查 'A'/'B'/'C'
@@ -1066,7 +987,7 @@ void Input_ABC(char* a) {
 
 // 29 输入+检索 主办单位名称
 void Sponsor_Input_Right(char* Sponsor) {
-	
+
 	char Pattern[20][500] = {
 		"教育部、中央网络安全和信息化领导小组办公室、国家发展和改革委员会、工业和信息化部、人力资源社会保障部、环境保护部、农业部、国家知识产权局、国务院侨务办公室、中国科学院、中国工程院、国务院扶贫开发领导小组办公室、共青团中央、省政府",
 		"共青团中央、中国科协、教育部和全国学联、地方省级人民政府",
@@ -1076,8 +997,8 @@ void Sponsor_Input_Right(char* Sponsor) {
 		"中国电子学会",
 		"教育部高等学校信息安全类专业教学指导委员会",
 		"华为公司",
-		"无",
-		"无",
+		"工业和信息化部人才交流中心",
+		"工业和信息化部教育部 江苏省人民政府",
 		"中国测绘地理信息学会",
 		"美国数学及其应用联合会",
 		"中国计算机学会",
@@ -1128,7 +1049,7 @@ void Time_Input_Right(char* Time) {
 						}
 					}
 				}
-				if(i==10){ isValid = true; }
+				if (i == 10) { isValid = true; }
 
 			}
 		}
@@ -1148,7 +1069,7 @@ void Journal_Input_Right(char* Journal) {
 		"CCF-B会议的最佳论文/最佳学生论文",
 		"CCF-B期刊论文",
 		"中科院期刊分区一区论文",
-		"CCFC会议的最佳论文 / 最佳学生论文",
+		"CCFC会议的最佳论文/最佳学生论文",
 		"CCF-C期刊论文",
 		"CCF-B会议长文",
 		"中科院期刊分区二区论文",
@@ -1175,72 +1096,71 @@ void Journal_Input_Right(char* Journal) {
 /**************************************************************************************************************************/
 
 // 32 输入+检查 卷/期/论文号/页码范围
-void Volume_Page_Input_Right(char Volume_Page[4][50]){    //char(*Volume_Page_Input_Right(char Volume_Page[4][50]))[50] {     //char (*(*F(char (*param)[50])))[4];
-	char Pattern_volume_issue[] = "卷：[0-9]+，期：[0-9]+";
-	char Pattern_paper_number[] = "[A-Z]{2}-[0-9]{3}-[0-9]{7}";
-	char Pattern_page_range[] = "[0-9]+-[0-9]+";
+void Volume_Page_Input_Right(char Volume_Page[4][50])
+{    //char(*Volume_Page_Input_Right(char Volume_Page[4][50]))[50] {     //char (*(*F(char (*param)[50])))[4];
 
-	int flag_volume_issue = 0;
 	int flag_paper_number = 0;
 	int flag_page_range = 0;
-	char temp[50] = { 0 };
 
-	while (!(flag_volume_issue && flag_paper_number && flag_page_range)) {
+	while (!(flag_paper_number && flag_page_range)) {
 		// 重新输入或者修改提示信息根据需要修改
-		if (!flag_volume_issue) {
-			printf("请按照“卷：*，期：*”的格式，输入正确的卷和期信息（其中*号填不仅限于一位的数字）：\n");
-			memset(temp, 0, 50);
-			scanf("%s", temp);
-			if (sscanf(temp, "%s", Pattern_volume_issue) == 1) {
-				flag_volume_issue = 1;
-				strcpy(Volume_Page[0], temp);
-			}
-		}
+
+		printf("请按照“卷：*，期：*”的格式，输入正确的卷和期信息（其中*号填不仅限于一位的数字）：\n");
+		memset(Volume_Page[0], 0, 50);
+		scanf("%s", Volume_Page[0]);
 
 		if (!flag_paper_number) {
 			printf("请按照“AB-123-4567890”的格式，输入正确的论文号（每个大写字母和数字都可以替换，位数固定）：\n");
-			memset(temp, 0, 50);
-			scanf("%s", temp);
-			if (sscanf(temp, "%s", Pattern_paper_number) == 1) {
+			memset(Volume_Page[1], 0, 50);
+			scanf("%s", Volume_Page[1]);
+			int i = 0;
+			for (i = 0; i < 14; i++) {
+				if (i >= 0 && i <= 1) {
+					if (!isupper(Volume_Page[1][i])) {
+						break;
+					}
+				}
+				else if ((i >= 3 && i <= 5) || (i >= 7 && i <= 13)) {
+					if (!isdigit(Volume_Page[1][i])) {
+						break;
+					}
+				}
+				else {
+					if (Volume_Page[1][i] != '-') {
+						break;
+					}
+				}
+			}
+			if (i == 14 && strlen(Volume_Page[1]) == 14) {
 				flag_paper_number = 1;
-				strcpy(Volume_Page[1], temp);
+			}
+			else {
+				printf("论文号输入错误。\n\n");
+				continue;
 			}
 		}
 
 		if (!flag_page_range) {
 			printf("请按照“*-*”的格式，输入正确的页码范围（其中*号填不仅限于一位的数字）：\n");
-			memset(temp, 0, 50);
-			scanf("%s", temp);
-			if (sscanf(temp, "%s", Pattern_page_range) == 1) {
+			memset(Volume_Page[2], 0, 50);
+			scanf("%s", Volume_Page[2]);
+			int i = 0;
+			for (i = 0; i < strlen(Volume_Page[2]); i++)
+			{
+				if (!isdigit(Volume_Page[2][i])) {
+					break;
+				}
+			}
+			if (i == strlen(Volume_Page[2])) {
 				flag_page_range = 1;
-				strcpy(Volume_Page[2], temp);
+			}
+			else {
+				printf("页码范围输入错误。\n\n");
+				continue;
 			}
 		}
 	}
 }
-/**************************************************************************************************************************/
-
-//// 33 输入+检查 纯中文
-//void Pure_Chinese_Input_Right(char* Input) {
-//	bool allChinese = false;
-//	while (!allChinese) {
-//		memset(Input, 0, 30);
-//		scanf("%s", Input);
-//		// 检查否是中文
-//		for (int i = 0; i < strlen(Input); i++) {
-//			wchar_t wc;
-//			mbtowc(&wc, &Input[i], 4);
-//			if (wc >= 0x4e00 && wc <= 0x9fff) {
-//				continue;
-//			}
-//			else {
-//				allChinese = false;
-//				printf("输入有误，请重新输入：\n");
-//				break;
-//			}
-//		}
-//	}
-//}
 /**************************************************************************************************************************/
 
 // 34 输入+检查 项目编号
@@ -1269,7 +1189,7 @@ void Pronum_Input_Right(char* ProjNum) {
 /**************************************************************************************************************************/
 
 // 35 数字ID转成字符串账号
-void Int_To_Str(int number, char* result) 
+void Int_To_Str(int number, char* result)
 {
 	result[0] = (number / 10000000) % 10 + '0';
 	result[1] = (number / 1000000) % 10 + '0';

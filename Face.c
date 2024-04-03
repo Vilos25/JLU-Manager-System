@@ -1506,11 +1506,13 @@ void Menu_adminStdGrade() {
         //cursor(26, 21);
         printf("\n\n\t\t\t10. 删除学生成绩空间");
         //cursor(26, 23);
-        printf("\n\n\t\t\t11. 显示单个学生的所有成绩");
+        printf("\n\n\t\t\t11. 显示所有学生的素质类加分项目");
+        //cursor(26, 23);
+        printf("\n\n\t\t\t12. 显示单个学生的所有成绩");
         //cursor(26, 25);
-        printf("\n\n\t\t\t12. 显示指定专业、年级的所有学生成绩");
+        printf("\n\n\t\t\t13. 显示指定专业、年级的所有学生成绩");
         //cursor(26, 27);
-        printf("\n\n\t\t\t13. 退出");
+        printf("\n\n\t\t\t14. 退出");
         //cursor(26, 29);
         printf("\n\n\n\t\t\t请输入您的选择：");
         choice = Input_intNumberover(2);
@@ -1871,6 +1873,12 @@ void Menu_adminStdGrade() {
             } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 11:
+            system("cls");
+            system("color F0");
+            HideCursor();
+            Display_All_BonusInform(Head_Bonus);
+            break;
+        case 12:
             do {
                 system("cls");
                 system("color F0");
@@ -1924,7 +1932,7 @@ void Menu_adminStdGrade() {
                 }
             } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 12:
+        case 13:
             do {
                 system("cls");
                 system("color F0");
@@ -1954,7 +1962,7 @@ void Menu_adminStdGrade() {
                 system("pause");
             } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
-        case 13:
+        case 14:
             flag = 1;
             break;
         default:
