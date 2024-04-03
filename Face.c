@@ -309,7 +309,7 @@ void Menu_Stu_bonus(BonusNote* Head, int ID)
         case 4:
             return;
         }
-    } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+    } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
     return;
 }
 
@@ -905,7 +905,7 @@ void Menu_StdGrade(int ID) {
                     Sleep(1000);
                 }
                 continue;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         }
         case 2: {
@@ -978,7 +978,7 @@ void Menu_StdGrade(int ID) {
                 }
                 // break; 
                 continue;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
 
 
@@ -1049,7 +1049,7 @@ void Menu_StdGrade(int ID) {
                 }
                 //break;
                 continue;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         }
         case 4: {
@@ -1269,7 +1269,7 @@ void Menu_adminTeacher()
                 printf("添加成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 2:
             do {
@@ -1296,7 +1296,7 @@ void Menu_adminTeacher()
                 printf("修改成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1323,7 +1323,7 @@ void Menu_adminTeacher()
                 printf("删除成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             system("cls");
@@ -1395,7 +1395,7 @@ void Menu_adminStdInfor()
                 printf("添加成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 2:
             do {
@@ -1422,7 +1422,7 @@ void Menu_adminStdInfor()
                 printf("修改成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1449,7 +1449,7 @@ void Menu_adminStdInfor()
                 printf("删除成功。\n");
                 Sleep(1000);
                 break;
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             printAll_StdInfor(head_StdInfor, head_Major);
@@ -1546,7 +1546,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 10);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -1572,7 +1572,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 10);
                 printf("删除成功。\n");
                 Sleep(1000);
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             do {
@@ -1609,7 +1609,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 12);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 5:
             do {
@@ -1646,7 +1646,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 12);
                 printf("删除成功。\n");
                 Sleep(1000);
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 6:
             do {
@@ -1693,7 +1693,7 @@ void Menu_adminStdGrade() {
                 cursor(26, 14);
                 printf("添加成功。\n");
                 Sleep(1000);
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 7:
             do {
@@ -1749,7 +1749,7 @@ void Menu_adminStdGrade() {
                     printf("添加失败。\n");
                     Sleep(1000);
                 }
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 8:
             do {
@@ -1802,7 +1802,7 @@ void Menu_adminStdGrade() {
                     printf("修改失败。\n");
                     Sleep(1000);
                 }
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 9:
             do {
@@ -1849,7 +1849,7 @@ void Menu_adminStdGrade() {
                     printf("删除失败。\n");
                     Sleep(1000);
                 }
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 10:
             do {
@@ -1868,7 +1868,7 @@ void Menu_adminStdGrade() {
                     printf("删除失败。\n");
                     Sleep(1000);
                 }
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 11:
             do {
@@ -1922,7 +1922,7 @@ void Menu_adminStdGrade() {
                     Display_Single_BonusNote(Head_Bonus, studentID);// 18 打印 一个人 所有的加分项目
                     system("pause");
                 }
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 12:
             do {
@@ -1952,7 +1952,7 @@ void Menu_adminStdGrade() {
                 }
                 display_Grade(head_Major, majorNum, gradeNum);
                 system("pause");
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 13:
             flag = 1;
@@ -2105,7 +2105,7 @@ void Menu_StudentStatusChange()
                 printf("\n\n\t\t\t学籍信息如下：");
                 display_StudentMajorAndGrade(head_Major, studentID);
                 //system("pause");
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 3:
             do {
@@ -2158,7 +2158,7 @@ void Menu_StudentStatusChange()
                 }
                 saveTo_StdGrade(&head_Major, FILENAME_GRA);
                 
-            } while (printf("\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
+            } while (printf("\n\n\n\n\t\t\t\t\t是否继续？（Y/N）："), toupper(Input_YN()) == 'Y');
             break;
         case 4:
             return;

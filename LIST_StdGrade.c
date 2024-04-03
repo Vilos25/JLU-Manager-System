@@ -759,8 +759,8 @@ int transfer_Student(struct Major** head_Major, int studentID, int targetMajorNu
     targetStudent->rank = sourceStudent->rank;
     strcpy(targetStudent->rankTime, sourceStudent->rankTime);
     targetStudent->scores = sourceStudent->scores;
-    targetStudent->next = targetGrade->student;
-    targetGrade->student = targetStudent;
+    targetStudent->next = (targetGrade->student)->next;
+    (targetGrade->student)->next = targetStudent;
     if (sourceGrade->student == sourceStudent) {
         sourceGrade->student = sourceStudent->next;
     } else {

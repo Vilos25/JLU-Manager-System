@@ -13,7 +13,6 @@ typedef struct Account
 }AccountNode;
 
 AccountNode* Start_Logging_Account(AccountNode* Head);
-AccountNode* LIST_Account(void);
 AccountNode* Find_DiferHead(AccountNode* Head, int Attri);
 void Display_Account(AccountNode* Head);
 
@@ -22,16 +21,14 @@ bool If_Inputs_1toNum(char Input[], int Num);
 int Input_Num();
 bool If_Inputs_Num(char Userinput8[]);
 
-char* Acc_Input_Right();  
-char* Acc_Input_Right_Tea();
-char* Pass_Input_Right();
-char* Name_Input_Right();
-char* Phone_Input_Right();
-char* Email_Input_Right();
+void Acc_Input_Right(char* Userinput);
+void Acc_Input_Right_Tea(char* Userinput);
+void Pass_Input_Right(char* Userinput);
+void Phone_Input_Right(char* Userinput);
+void Email_Input_Right(char* Userinput);
 
 bool If_InputAcc_Format(char Input[]);
 bool If_InputPass_Format(char Input[]);
-bool If_InputName_Format(char Input[]);
 bool If_InputPhone_Format(char Input[]);
 bool If_InputEmail_Format(char Input[]);
 bool If_InputAcc_Format_Tea(char Input[]);
@@ -53,11 +50,12 @@ AccountNode* Email_Change_Password(AccountNode* Head, char Inputemail[]);
 
 int Readfile(AccountNode* Head, AccountNode* Diferhead, AccountNode* Accrr[], int Attri);//从 LIST_Account.txt 文件中批量读出的账号：
 AccountNode* Access_AccList(AccountNode* Head, AccountNode* Diferhead, AccountNode* Accrr[], int Attri, int Num);
-AccountNode* Batch_Delete_Account(AccountNode* Head, int m,char Account[]);
+AccountNode* Batch_Delete_Account(AccountNode* Head, int m, char Account[]);
 AccountNode* Batch_Change_Password(AccountNode* Head, int m, char Account[], char Newpass[]);
-void Save_List_ToFile(AccountNode* Head);
 
+void Save_List_ToFile(AccountNode* Head);
 int Login_Register_Main(int* ID);
+void Free_account(AccountNode* Head);
 
 int Str_To_IntArr(const char* Inputacc);
 #endif

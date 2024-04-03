@@ -151,7 +151,7 @@ void print_StdInfor(StdInfor* head, struct Major* head_Major, int studentId) {
     StdInfor* current = head;
     while (current != NULL) {
         if (current->id == studentId) {
-            printf("\t\t学号：%d \t\t", current->id);
+            printf("\n\t\t学号：%d \t\t", current->id);
             printf("姓名：%s \t", current->name);
             if (current->gender == 'M')
                 printf("性别：男\n");
