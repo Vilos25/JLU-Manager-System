@@ -1,5 +1,3 @@
-//注：此.c文件很多解释为了一眼理解，正式提交时会删掉部分注释。
-//共898行，其中前219行为主函数，剩下的为非主函数的定义。
 #define _CRT_SECURE_NO_WARNINGS
 #include <string.h>
 #include <stdio.h>
@@ -18,15 +16,12 @@ int cho;
 
 int Login_Register_Main(int* ID)
 {
-	//system("cls");
 	system("color F0");
-	AccountNode* Accrr[60] = { 0 };//此数组作为从文件中批量录入账号的容器。
+	AccountNode* Accrr[60] = { 0 };
 	AccountNode* Head = NULL;
 	Head = (AccountNode*)malloc(sizeof(AccountNode));
 	Head->Next = NULL;
-	//Head = LIST_Account();
-	Head = Start_Logging_Account(Head);//原本存在的模拟链表。
-	//Display_Account(Head);//展示整条账号链表。
+	Head = Start_Logging_Account(Head);
 	AccountNode* Stuhead = Find_DiferHead(Head, 1);//从整条链表中分别找到第一个学生账号、第一个辅导员账号、第一个管理员账号。
 	AccountNode* Teahead = Find_DiferHead(Head, 2);
 	AccountNode* Admhead = Find_DiferHead(Head, 3);//Adm：administator 的缩写，意为管理员。
@@ -74,7 +69,7 @@ Laststep1: //以下所有顶格写的都是跳转回上一步的入口。
 	int Choice;
 
 	do {
-		cursor(32, y+=2);
+		cursor(32, y += 2);
 		printf("请输入你的选项:");
 		Choice = Input_1toNum(4); //输入正确的单个选项数字（输入已包含纠正输入错误功能）。
 	} while (!(1 <= Choice && Choice <= 4));
@@ -146,11 +141,11 @@ Laststep1: //以下所有顶格写的都是跳转回上一步的入口。
 	Sleep(1000);
 
 	switch (Choice) {
-	case 1:  /***学生系统入口函数名***///(Intputacc); 
-		*ID = Str_To_IntArr(Intputacc);//这个函数是int*型的，直接赋给ID了，不用解引用
+	case 1:  /***学生系统入口函数名***/
+		*ID = Str_To_IntArr(Intputacc);
 		return 1;
 		break;
-	case 2: /***教师系统入口函数名***///(Intputacc); 
+	case 2: /***教师系统入口函数名***/
 		*ID = Str_To_IntArr(Intputacc);
 		return 2;
 		break;
@@ -166,7 +161,7 @@ Laststep1: //以下所有顶格写的都是跳转回上一步的入口。
 		cursor(26, xy += 1);
 		int Choice1 = Input_1toNum(2);
 		if (Choice1 == 1) {
-			/***管理员系统入口函数名***///(Intputacc); 
+			/***管理员系统入口函数名***/
 			*ID = Str_To_IntArr(Intputacc);
 			return 3;
 		}
@@ -449,7 +444,6 @@ void Display_Account(AccountNode* Head)
 		printf("%s\t", pcurrent->Email);
 		printf("\n");
 
-		//指针移动到下一个元素的首地址
 		pcurrent = pcurrent->Next;
 	}
 }
@@ -484,7 +478,7 @@ int Input_Num() {
 	{
 		printf("输入内容格式有误，请输入数字：\n");
 		memset(Userinput, 0, 5); //清空字符串，防止残留给下次输入。
-		//getchar();
+
 		scanf("%s", Userinput);
 	}
 	return (atoi(Userinput));
@@ -514,7 +508,7 @@ void Acc_Input_Right(char* Userinput)
 	cursor(26, xy);
 	printf("请输入账号：");
 	Input_charNumber(Userinput, 8);
-	//scanf("%s", Userinput);
+
 
 	while (!If_InputAcc_Format(Userinput))//循环终止条件：用户正确格式的账号。
 	{
@@ -523,7 +517,7 @@ void Acc_Input_Right(char* Userinput)
 		printf("输入内容格式有误，请输入8个数字的账号：\n");
 		memset(Userinput, 0, 30);//清空字符串，防止残留给下次输入。
 		Input_charNumber(Userinput, 8);
-		//scanf("%s", Userinput);
+
 	}
 }
 /**************************************************************************************************************************/
@@ -536,7 +530,7 @@ void Acc_Input_Right_Tea(char* Userinput)
 	cursor(26, xy);
 	printf("请输入账号：");
 	Input_charNumber(Userinput, 6);
-	//scanf("%s", Userinput);
+
 
 	while (!If_InputAcc_Format_Tea(Userinput))//循环终止条件：用户正确格式的账号。
 	{
@@ -545,7 +539,7 @@ void Acc_Input_Right_Tea(char* Userinput)
 		printf("输入内容格式有误，请输入6个数字的账号：\n");
 		memset(Userinput, 0, 30);//清空字符串，防止残留给下次输入。
 		Input_charNumber(Userinput, 6);
-		//scanf("%s", Userinput);
+
 	}
 }
 /**************************************************************************************************************************/
@@ -555,8 +549,7 @@ void Pass_Input_Right(char* Userinput)
 {
 	memset(Userinput, 0, 30);
 	printf("请输入密码：");
-	//getchar();
-	//scanf("%s", Userinput);
+
 	Pass_Input_Line(Userinput);
 
 	while (!If_InputPass_Format(Userinput))//循环终止条件：用户输入了正确格式的密码。
@@ -564,7 +557,7 @@ void Pass_Input_Right(char* Userinput)
 		cursor(26, xy++);
 		printf("输入内容格式有误，请输入只包含数字和字母的小于20个字符的密码：");
 		memset(Userinput, 0, 30);//清空字符串，防止残留给下次输入。
-		//getchar();
+
 		Pass_Input_Line(Userinput);
 	}
 
@@ -576,18 +569,16 @@ void Pass_Input_Right(char* Userinput)
 void Phone_Input_Right(char* Userinput)
 {
 	memset(Userinput, 0, 30);
-	//getchar();
+
 	Input_charNumber(Userinput, 11);
-	//scanf("%s", Userinput);
 
 	while (!If_InputPhone_Format(Userinput))//循环终止条件：用户正确格式的手机号。
 	{
 		cursor(26, xy++);
 		printf("输入内容格式有误，请输入11个数字的手机号：\n");
 		memset(Userinput, 0, 30);//清空字符串，防止残留给下次输入。
-		//getchar();
+
 		Input_charNumber(Userinput, 11);
-		//scanf("%s", Userinput);
 	}
 
 }
@@ -597,18 +588,14 @@ void Phone_Input_Right(char* Userinput)
 void Email_Input_Right(char* Userinput)
 {
 	memset(Userinput, 0, 30);
-	//getchar();
 	Input_Email(Userinput);
-	//scanf("%s", Userinput);
 
 	while (!If_InputEmail_Format(Userinput))//循环终止条件：用户正确格式的邮箱。
 	{
 		cursor(26, xy++);
 		printf("输入内容格式有误，请输入正确的邮箱：\n");
 		memset(Userinput, 0, 30);//清空字符串，防止残留给下次输入。
-		//getchar();
 		Input_Email(Userinput);
-		//scanf("%s", Userinput);
 	}
 
 }
@@ -937,7 +924,6 @@ AccountNode* Change_Password(AccountNode* Head, char Account[])
 		pcurrent = pcurrent->Next;
 	}
 	printf("新密码：");
-	//getchar();
 	char Newpassword[20] = { 0 };
 	scanf("%s", Newpassword);//输入新密码。
 	while (!If_InputPass_Format(Newpassword))//检验新密码格式
@@ -945,7 +931,6 @@ AccountNode* Change_Password(AccountNode* Head, char Account[])
 		cursor(26, xy++);
 		printf("输入内容格式有误，请输入只包含数字和字母的小于20个字符的新密码：");
 		memset(Newpassword, 0, 20);//清空字符串，防止残留的字符影响下次循环的输入。
-		//getchar();
 		cursor(26, xy++);
 		scanf("%s", Newpassword);
 	}
@@ -964,7 +949,6 @@ AccountNode* Phone_Change_Password(AccountNode* Head, char Inputphone[]) {
 	}
 	cursor(26, xy++);
 	printf("请输入新密码，");
-	//getchar();
 	Pass_Input_Right(pcurrent->Password);//输入新密码。
 	return Head;
 }
@@ -978,7 +962,6 @@ AccountNode* Email_Change_Password(AccountNode* Head, char Inputemail[]) {
 	}
 	cursor(26, xy++);
 	printf("请输入新密码，");
-	//getchar();
 	Pass_Input_Right(pcurrent->Password);
 	return Head;
 }
@@ -1003,10 +986,10 @@ int Readfile(AccountNode* Head, AccountNode* Diferhead, AccountNode* Accrr[], in
 		Accrr[i]->Next = NULL;
 		Accrr[i]->Attribute = Attri;
 	}
-	fclose(fp);//关闭文件。
+	fclose(fp);
 	Access_AccList(Head, Diferhead, Accrr, Attri, i);//将每个新节点“串”进链表里。//插入位置由三个不同的“伪头结点”和属性Attri确定；
 	cursor(26, xy += 2);
-	printf("共注册 %d 个新账号\n", i);//当读到为空时由于i++,此时读到的账号数为i 。
+	printf("共注册 %d 个新账号\n", i);
 	return i; //返回读出的账号数。
 }
 /**************************************************************************************************************************/
@@ -1037,13 +1020,13 @@ AccountNode* Batch_Delete_Account(AccountNode* Head, int Num, char Account[]) {
 	AccountNode* pprev = Head;
 	AccountNode* pcurrent = Head->Next;
 	AccountNode* pcurrent_to_num = NULL;
-	while (!(strcmp(pcurrent->Accountnum, Account) == 0)) {//找到开始删除的对应账号。
+	while (!(strcmp(pcurrent->Accountnum, Account) == 0)) {//开始删除的对应账号。
 		pprev = pcurrent;
 		pcurrent = pcurrent->Next;
 	}
 	pcurrent_to_num = pcurrent;//从pcurrent开始删除，pprev不用删除，留着连接剩下的一段链表。
 	int i = 0;
-	for (i = 0; i < Num; i++) {//用for循环删除掉Num个账号。
+	for (i = 0; i < Num; i++) {//循环删除掉Num个账号。
 		AccountNode* pcurrent_to_num2 = pcurrent_to_num->Next; //用pcurrent_to_num2标记要删的节点的下一个结点。
 		free(pcurrent_to_num);
 		pcurrent_to_num = pcurrent_to_num2;
@@ -1097,7 +1080,6 @@ AccountNode* Start_Logging_Account(AccountNode* Head)
 	{
 		char line[100]; // 用于读取每行的缓冲区
 
-		// 读取一行内容
 		if (fgets(line, sizeof(line), fp) == NULL)
 			break; // 文件结束或读取错误，跳出循环
 
@@ -1119,19 +1101,19 @@ AccountNode* Start_Logging_Account(AccountNode* Head)
 //函数33//保存所有账号信息到文件的函数：
 void Save_List_ToFile(AccountNode* Head)
 {
-	FILE* file = fopen("LIST_Account.txt", "w");  // 以写入模式打开文件，若文件不存在则创建，若存在则清空文件内容
+	FILE* file = fopen("LIST_Account.txt", "w");
 	if (file == NULL) {
 		cursor(26, xy++);
 		printf("无法打开文件\n");
 		return;
 	}
 
-	AccountNode* current = Head->Next;  // 从链表头部开始遍历
+	AccountNode* current = Head->Next;
 	while (current != NULL) {
 		fprintf(file, "%s \t%s \t%d \t%s \t %s\t %s\n", current->Accountnum, current->Password, current->Attribute, current->Name, current->Phonenum, current->Email);
-		current = current->Next;  // 遍历至下一个节点
+		current = current->Next;
 	}
-	fclose(file);  // 关闭文件
+	fclose(file);
 }
 /**************************************************************************************************************************/
 
@@ -1142,16 +1124,12 @@ int Str_To_IntArr(const char* Inputacc) {
 	int ans = 0;
 	int* intArr = (int*)malloc(length * sizeof(int));  // 为整型数组分配内存空间
 
-	if (intArr == NULL) {
-		return NULL;  // 失败时返回空指针
-	}
-
 	for (i = 0; i < length; i++) {
 		intArr[i] = Inputacc[i] - '0';  // 将字符转换为整数并存储到整型数组中
 		ans = ans * 10 + intArr[i];
 	}
 
-	return ans;  // 返回整型数组指针
+	return ans;  // 返回整型
 }
 /**************************************************************************************************************************/
 

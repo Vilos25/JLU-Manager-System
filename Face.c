@@ -386,6 +386,7 @@ void Delet_Bonus(BonusNote* Head, int stu_ID) {
             printf("\n\t\t\t删除成功！\n\n");
             break;
         case 2:
+            pcurrent2 = pcurrent2->Next;
             break;
         case 3:
             return;
@@ -448,6 +449,7 @@ void Delet_Bonus(BonusNote* Head, int stu_ID) {
             printf("\n\t\t\t删除成功！\n\n");
             break;
         case 2:
+            pcurrent3 = pcurrent3->Next;
             break;
         case 3:
             return;
@@ -512,6 +514,7 @@ void Delet_Bonus(BonusNote* Head, int stu_ID) {
             printf("\n\t\t删除成功！\n\n");
             break;
         case 2:
+            pcurrent4 = pcurrent4->Next;
             break;
         case 3:
             return;

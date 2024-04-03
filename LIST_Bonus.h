@@ -75,10 +75,6 @@ void Save_CompList_ToFile(BonusNote* Head);// 11 将所有 比赛项目 保存进文件
 void Save_PaperList_ToFile(BonusNote* Head);// 12 将所有 论文项目 保存进文件
 void Save_ProjList_ToFile(BonusNote* Head);// 13 将所有 结题项目 保存进文件
 
-//BonusNote* Modify_CompAttr(BonusNote* Head, char Acc[], char Compname[]);// 14 修改 单人的比赛项目 加分状态
-//BonusNote* Modify_PaperAttr(BonusNote* Head, char Acc[], char Papername[]);// 15 修改 单人的论文项目 加分状态
-//BonusNote* Modify_ProjAttr(BonusNote* Head, char Acc[], char Projname[]);// 16 修改 单人的结题项目 加分状态
-
 float Calcul_Single_Bonusponit(BonusNote* Head, char Acc[]);// 17 计算 单个人 的有效加分绩点
 
 void Display_Single_BonusNote(BonusNote* Head, int ID);// 18 打印 一个人 所有的加分项目
@@ -109,10 +105,8 @@ void Int_To_Str(int number, char* result);// 35 数字ID转成字符串账号
 void Delet_Bonus(BonusNote* Head, int ID);// 36 学生自己选择删除部分加分项目
 void Tea_Audit(BonusNote* Head, int TeaID);// 37 教师审核所有未审核的素质类加分
 
-//增加学生节点，传入int类型的学号，char类型的姓名，返回一个新的学生节点
-void Add_BonusNote_Node(BonusNote* Head, int ID, char Name[]);
+void Add_BonusNote_Node(BonusNote* Head, int ID, char Name[]);//增加学生节点，传入int类型的学号，char类型的姓名，返回一个新的学生节点
 
-//通过账号查找学生节点，返回该节点的指针
-BonusNote* Find_BonusNote_ByAcc(BonusNote* Head, int ID);
+BonusNote* Find_BonusNote_ByAcc(BonusNote* Head, int ID);//通过账号查找学生节点，返回该节点的指针
 #endif // !LIST_BONUS_H
 

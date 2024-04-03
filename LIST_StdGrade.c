@@ -1120,22 +1120,6 @@ void loadFrom_StdGrade(struct Major** head_Major, char* filename) {
 	clear_StdGrade(head_Major);
 	*head_Major = create_Major();
 
-	// 读取文件中的JSON数据
-	/*fseek(file, 0, SEEK_END);
-	long fileSize = ftell(file);
-	rewind(file);
-	char* jsonBuffer = (char*)malloc(fileSize + 1);
-	if (jsonBuffer == NULL) {
-		fclose(file);
-		printf("内存分配失败\n");
-		return;
-	}
-	fread(jsonBuffer, 1, fileSize, file);
-	jsonBuffer[fileSize] = '\0';
-
-	char* jsonBufferCopy = strdup(jsonBuffer);  // 创建副本字符串
-	char* line = strtok(jsonBufferCopy, "\n");
-	*/
 	// 解析JSON数据并构建链表
 	struct Major* currentMajor = NULL;
 	struct Grade* currentGrade = NULL;
